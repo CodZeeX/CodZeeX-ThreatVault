@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "threatvault"
+version = "2.4.0"
+authors = [
+  { name="RobsHs", email="fredapacitan@gmail.com" },
+]
+description = "CodZeeX ThreatVault: Enterprise Threat Intelligence & Detection Framework"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+threatvault = "threatvault.cli:main"
