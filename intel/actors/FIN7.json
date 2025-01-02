@@ -1,0 +1,13 @@
+{
+  "actor_id": "FIN7",
+  "aliases": [
+    "Carbanak"
+  ],
+  "origin": "Criminal",
+  "focus": "Financial theft, Point-of-Sale, Ransomware affiliate",
+  "tracked_since": "2025",
+  "threat_level": "HIGH",
+  "mitre_attck_groups": [
+    "G041"
+  ]
+}
