@@ -1,0 +1,13 @@
+{
+  "actor_id": "Volt_Typhoon",
+  "aliases": [
+    "Bronze Silhouette"
+  ],
+  "origin": "China",
+  "focus": "Critical Infrastructure, Living-off-the-land",
+  "tracked_since": "2025",
+  "threat_level": "CRITICAL",
+  "mitre_attck_groups": [
+    "G023"
+  ]
+}
