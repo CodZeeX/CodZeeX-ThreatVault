@@ -1,0 +1,8 @@
+# CodZeeX Threat Feeds: Malicious Domains & Dynamic DNS
+# Updated across 2025-2026 intelligence operations
+update-win32-security[.]com
+c2-gate-telemetry-cdn[.]net
+auth-session-recovery[.]org
+billing-verification-portal[.]top
+api-cloud-sync-worker[.]info
+payload-distribution-cdn[.]biz
