@@ -1,0 +1,9 @@
+# CodZeeX Threat Feeds: Malicious IP Addresses & C2 Reputations
+# Updated dynamically across 2025-2026 intelligence operations
+# Format: IP,Classification,Severity
+185.220.101.5,Tor Exit Node / Scanner,MEDIUM
+194.26.29.112,Cobalt Strike C2 Server,CRITICAL
+45.154.255.89,RedLine Stealer Infrastructure,HIGH
+91.215.85.17,Lumma C2 Gate,CRITICAL
+103.151.125.10,Brute Force Scanner,LOW
+185.196.8.22,Phishing Staging Host,HIGH
