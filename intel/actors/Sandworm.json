@@ -1,0 +1,13 @@
+{
+  "actor_id": "Sandworm",
+  "aliases": [
+    "Voodoo Bear"
+  ],
+  "origin": "Russia",
+  "focus": "Destructive wiper malware, SCADA, ICS/OT",
+  "tracked_since": "2025",
+  "threat_level": "CRITICAL",
+  "mitre_attck_groups": [
+    "G065"
+  ]
+}
