@@ -1,0 +1,13 @@
+{
+  "actor_id": "Lazarus_Group",
+  "aliases": [
+    "Hidden Cobra"
+  ],
+  "origin": "North Korea",
+  "focus": "Cryptocurrency, Financial, Defense",
+  "tracked_since": "2025",
+  "threat_level": "HIGH",
+  "mitre_attck_groups": [
+    "G068"
+  ]
+}
