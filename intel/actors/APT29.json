@@ -1,0 +1,13 @@
+{
+  "actor_id": "APT29",
+  "aliases": [
+    "Cozy Bear"
+  ],
+  "origin": "Russia",
+  "focus": "Espionage, Cloud Infrastructure, Supply Chain",
+  "tracked_since": "2025",
+  "threat_level": "CRITICAL",
+  "mitre_attck_groups": [
+    "G060"
+  ]
+}
