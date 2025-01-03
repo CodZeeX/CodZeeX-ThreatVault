@@ -1,0 +1,13 @@
+{
+  "actor_id": "Scattered_Spider",
+  "aliases": [
+    "Octo Tempest"
+  ],
+  "origin": "Criminal",
+  "focus": "SIM swapping, Cloud identity compromise, Okta",
+  "tracked_since": "2025",
+  "threat_level": "HIGH",
+  "mitre_attck_groups": [
+    "G080"
+  ]
+}
