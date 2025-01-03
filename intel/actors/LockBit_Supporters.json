@@ -1,0 +1,13 @@
+{
+  "actor_id": "LockBit_Supporters",
+  "aliases": [
+    "N/A"
+  ],
+  "origin": "Criminal",
+  "focus": "Global corporate extortion, Exfiltration",
+  "tracked_since": "2025",
+  "threat_level": "HIGH",
+  "mitre_attck_groups": [
+    "G023"
+  ]
+}
