@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 16
+id: f0c11e60d19ba6a08c0e204ec5408029
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-14
+tags:
+    - attack.defense_evasion
+    - attack.t1016
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_16.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_16'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
