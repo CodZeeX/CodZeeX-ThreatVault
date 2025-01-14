@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 10
+id: 80b1d0c1eb80f6ccb4aa0f18205f6c17
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-14
+tags:
+    - attack.exfiltration
+    - attack.t1010
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_10.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_10'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
