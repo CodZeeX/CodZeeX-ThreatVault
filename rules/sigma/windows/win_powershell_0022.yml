@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 22
+id: 050f22540ffc8e7c262d98d67b53a11b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-14
+tags:
+    - attack.exfiltration
+    - attack.t1022
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_22.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_22'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
