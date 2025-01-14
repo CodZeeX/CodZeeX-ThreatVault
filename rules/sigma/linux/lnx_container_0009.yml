@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 9
+id: 89d2c50f86ce21485b710b0111baa943
+status: stable
+description: Identifies suspicious Linux event matching COMMAND_AND_CONTROL
+references:
+    - https://attack.mitre.org/tactics/command_and_control
+author: RobsHs (CodZeeX)
+date: 2025-01-14
+tags:
+    - attack.command_and_control
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_9.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
