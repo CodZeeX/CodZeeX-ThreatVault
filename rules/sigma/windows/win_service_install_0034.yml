@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 34
+id: ac6deb6b7eb80aaf852161a00df255f5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-15
+tags:
+    - attack.exfiltration
+    - attack.t1034
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_34.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_34'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
