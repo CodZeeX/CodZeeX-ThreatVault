@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 46
+id: 332d11952c9919c6d66ba357e5bf2c81
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-16
+tags:
+    - attack.exfiltration
+    - attack.t1046
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_46.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_46'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
