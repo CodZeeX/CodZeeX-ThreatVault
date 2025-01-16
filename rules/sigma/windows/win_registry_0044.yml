@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 44
+id: f9d84dfa3ece33694ee0b803baca2486
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-16
+tags:
+    - attack.collection
+    - attack.t1044
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_44.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_44'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
