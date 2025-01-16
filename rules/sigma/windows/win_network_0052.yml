@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 52
+id: 49c3afa0d6b28c0660a7e17cea33ef71
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-16
+tags:
+    - attack.defense_evasion
+    - attack.t1052
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_52.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_52'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
