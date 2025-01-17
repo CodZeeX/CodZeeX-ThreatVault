@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 60
+id: 87b9d78a683bbefcdeb7e353ea93b1df
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-17
+tags:
+    - attack.initial_access
+    - attack.t1060
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_60.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_60'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
