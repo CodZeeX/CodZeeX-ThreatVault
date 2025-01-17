@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 70
+id: b5a0849c5c64b003595028d817788e9b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-17
+tags:
+    - attack.exfiltration
+    - attack.t1070
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_70.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_70'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
