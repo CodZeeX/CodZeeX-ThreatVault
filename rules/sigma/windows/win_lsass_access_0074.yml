@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 74
+id: 30a4d6b9f6e11d0319733c4b469ca45f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-17
+tags:
+    - attack.persistence
+    - attack.t1074
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_74.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_74'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
