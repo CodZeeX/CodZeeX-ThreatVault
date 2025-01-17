@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 62
+id: 444258ce9ff0367ffd1933601e056c8c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-17
+tags:
+    - attack.persistence
+    - attack.t1062
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_62.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_62'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
