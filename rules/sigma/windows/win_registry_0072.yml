@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 72
+id: b751962af42c4090bc58d22a790f68b7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-17
+tags:
+    - attack.initial_access
+    - attack.t1072
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_72.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_72'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
