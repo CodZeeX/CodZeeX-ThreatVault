@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 86
+id: 1f32f8d7aa458dac9e4f159cbf2e2489
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-19
+tags:
+    - attack.persistence
+    - attack.t1086
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_86.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_86'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
