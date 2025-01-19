@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 84
+id: f82fe9a9a7a96dd1272262ebdc218937
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-19
+tags:
+    - attack.initial_access
+    - attack.t1084
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_84.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_84'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
