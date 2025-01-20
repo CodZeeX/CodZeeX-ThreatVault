@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 100
+id: 468f09466310fd092a6decf650f42554
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-20
+tags:
+    - attack.defense_evasion
+    - attack.t1100
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_100.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_100'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
