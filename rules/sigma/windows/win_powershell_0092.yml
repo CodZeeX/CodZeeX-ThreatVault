@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 92
+id: aeb5b73bf8c284daf7c85708af6ed0fa
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-20
+tags:
+    - attack.collection
+    - attack.t1092
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_92.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_92'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
