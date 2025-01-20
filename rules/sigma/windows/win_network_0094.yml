@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 94
+id: 65d5759ae5f37f874d5394d90099ef3d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-20
+tags:
+    - attack.exfiltration
+    - attack.t1094
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_94.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_94'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
