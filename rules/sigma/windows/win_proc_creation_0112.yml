@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 112
+id: bb9e3a2a973a5260effccbe699af5156
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-21
+tags:
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_112.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_112'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
