@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 114
+id: 3f6c13013344a8e696f564da0a69f9ca
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-21
+tags:
+    - attack.discovery
+    - attack.t1114
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_114.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_114'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
