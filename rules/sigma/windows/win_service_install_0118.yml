@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 118
+id: c5ba86a2555da5d8fc8c9378de5dbf51
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-21
+tags:
+    - attack.exfiltration
+    - attack.t1118
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_118.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_118'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
