@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 116
+id: 65a9eb50fe3ef26c3c8028a3d1b37b39
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-21
+tags:
+    - attack.collection
+    - attack.t1116
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_116.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_116'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
