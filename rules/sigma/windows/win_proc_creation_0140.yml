@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 140
+id: cac027454a43f2c83e82dcbd7c34c366
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-22
+tags:
+    - attack.collection
+    - attack.t1140
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_140.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_140'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
