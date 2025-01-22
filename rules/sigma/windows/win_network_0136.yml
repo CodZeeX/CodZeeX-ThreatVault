@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 136
+id: 3bf7b3fdc8fbf2936c9d9a29090dd840
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-22
+tags:
+    - attack.defense_evasion
+    - attack.t1136
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_136.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_136'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
