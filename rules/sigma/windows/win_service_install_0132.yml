@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 132
+id: de56b7d3ac1035f03529012fab7b9a0c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-22
+tags:
+    - attack.initial_access
+    - attack.t1132
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_132.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_132'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
