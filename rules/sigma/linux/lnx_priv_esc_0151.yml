@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 151
+id: 80b50f1f17a5999c3f18d23241c06eb1
+status: stable
+description: Identifies suspicious Linux event matching LATERAL_MOVEMENT
+references:
+    - https://attack.mitre.org/tactics/lateral_movement
+author: RobsHs (CodZeeX)
+date: 2025-01-23
+tags:
+    - attack.lateral_movement
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_151.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
