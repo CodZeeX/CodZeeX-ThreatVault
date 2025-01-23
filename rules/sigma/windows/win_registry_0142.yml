@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 142
+id: a7e7c64adddb7a87d4bfa740a538cf38
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-23
+tags:
+    - attack.exfiltration
+    - attack.t1142
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_142.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_142'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
