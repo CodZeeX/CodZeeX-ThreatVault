@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 150
+id: 178f3af07619688064c1ac553728b241
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-23
+tags:
+    - attack.discovery
+    - attack.t1150
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_150.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_150'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
