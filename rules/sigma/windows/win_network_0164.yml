@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 164
+id: 6e293dd440085337e3041a086c08108c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-24
+tags:
+    - attack.collection
+    - attack.t1164
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_164.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_164'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
