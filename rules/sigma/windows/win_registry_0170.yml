@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 170
+id: e6f5aac6d1096da626e44089891aa772
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-24
+tags:
+    - attack.persistence
+    - attack.t1170
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_170.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_170'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
