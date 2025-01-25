@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 186
+id: 7c9bbb18f6a108925b13f1a0834edeaa
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-25
+tags:
+    - attack.discovery
+    - attack.t1186
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_186.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_186'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
