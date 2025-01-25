@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 184
+id: 30ffd172f120ad2563f0053a2b960dac
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-25
+tags:
+    - attack.defense_evasion
+    - attack.t1184
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_184.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_184'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
