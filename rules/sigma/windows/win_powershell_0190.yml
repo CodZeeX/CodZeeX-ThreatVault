@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 190
+id: 647b4ddfcb7a19edae376800d43ba96c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-26
+tags:
+    - attack.exfiltration
+    - attack.t1190
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_190.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_190'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
