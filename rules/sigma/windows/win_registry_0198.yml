@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 198
+id: 0f962386226b4cf60dc98431b39b55d0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-26
+tags:
+    - attack.discovery
+    - attack.t1198
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_198.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_198'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
