@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 196
+id: c347cbdebda8ac29241a9a7b7a4898d3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-26
+tags:
+    - attack.defense_evasion
+    - attack.t1196
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_196.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_196'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
