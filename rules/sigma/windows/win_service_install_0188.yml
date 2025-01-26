@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 188
+id: bca2e03ea8091305e316979491e9cf01
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-26
+tags:
+    - attack.collection
+    - attack.t1188
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_188.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_188'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
