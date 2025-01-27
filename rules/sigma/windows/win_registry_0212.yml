@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 212
+id: 794b3b0f57aca398c1ef8a1ac98d5a3c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-27
+tags:
+    - attack.collection
+    - attack.t1212
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_212.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_212'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
