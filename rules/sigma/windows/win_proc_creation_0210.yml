@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 210
+id: 3b620a937ed4707615444325bc73ae82
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-27
+tags:
+    - attack.discovery
+    - attack.t1210
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_210.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_210'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
