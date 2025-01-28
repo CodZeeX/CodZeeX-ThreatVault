@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 228
+id: f5b15ffd0f3303fc685c6edb33a930a4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-28
+tags:
+    - attack.initial_access
+    - attack.t1228
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_228.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_228'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
