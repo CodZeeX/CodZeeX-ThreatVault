@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 226
+id: 3ec3b69d0ea4e8ecf8169eee3cdceb07
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-28
+tags:
+    - attack.exfiltration
+    - attack.t1226
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_226.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_226'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
