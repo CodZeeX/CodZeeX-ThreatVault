@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 230
+id: d70690e826d0822afc5c7da00fbd56e4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-28
+tags:
+    - attack.persistence
+    - attack.t1230
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_230.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_230'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
