@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 246
+id: 0760c6b6bfbbbce44b4bcf191b21813b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-29
+tags:
+    - attack.discovery
+    - attack.t1246
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_246.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_246'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
