@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 258
+id: 4e249fd4c2e12adbfa8d0d8146d510b1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-30
+tags:
+    - attack.discovery
+    - attack.t1258
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_258.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_258'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
