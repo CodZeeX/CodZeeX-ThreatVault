@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 276
+id: 51d7d116fa97d14d3f6c31596265e087
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-31
+tags:
+    - attack.initial_access
+    - attack.t1276
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_276.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_276'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
