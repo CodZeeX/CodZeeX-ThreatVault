@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 282
+id: 1729c20d7f3f87fdb8dd4b8eaf68180e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-31
+tags:
+    - attack.discovery
+    - attack.t1282
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_282.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_282'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
