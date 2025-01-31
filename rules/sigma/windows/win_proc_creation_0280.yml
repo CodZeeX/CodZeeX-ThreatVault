@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 280
+id: 8280db0786a318fa0990f012601cf331
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-01-31
+tags:
+    - attack.defense_evasion
+    - attack.t1280
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_280.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_280'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
