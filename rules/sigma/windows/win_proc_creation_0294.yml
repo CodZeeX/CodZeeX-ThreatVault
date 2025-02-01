@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 294
+id: 400e13bc1061b5bb8c26561f3828027f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-01
+tags:
+    - attack.discovery
+    - attack.t1294
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_294.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_294'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
