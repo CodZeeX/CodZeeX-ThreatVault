@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 296
+id: 74264050468a324fd5654247f6f843c5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-01
+tags:
+    - attack.collection
+    - attack.t1296
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_296.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_296'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
