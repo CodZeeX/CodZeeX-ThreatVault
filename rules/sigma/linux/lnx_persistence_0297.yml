@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Persistence Cron - Pattern 297
+id: e88e79fbcbca190560d87b9a3986ae44
+status: stable
+description: Identifies suspicious Linux event matching COMMAND_AND_CONTROL
+references:
+    - https://attack.mitre.org/tactics/command_and_control
+author: RobsHs (CodZeeX)
+date: 2025-02-01
+tags:
+    - attack.command_and_control
+logsource:
+    category: persistence_cron
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_297.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
