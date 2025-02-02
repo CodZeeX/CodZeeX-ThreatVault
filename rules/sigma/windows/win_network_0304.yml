@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 304
+id: 301fecfda88cbbcb9cac187b2c5096f5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-02
+tags:
+    - attack.defense_evasion
+    - attack.t1304
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_304.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_304'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
