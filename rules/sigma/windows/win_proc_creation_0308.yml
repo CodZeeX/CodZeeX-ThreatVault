@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 308
+id: ef26022c413000ccd8b8574bde7e4b07
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-02
+tags:
+    - attack.collection
+    - attack.t1308
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_308.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_308'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
