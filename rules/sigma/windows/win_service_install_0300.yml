@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 300
+id: d0b05cab81b5aa8435e8af0aea2a7cd8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-02
+tags:
+    - attack.initial_access
+    - attack.t1300
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_300.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_300'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
