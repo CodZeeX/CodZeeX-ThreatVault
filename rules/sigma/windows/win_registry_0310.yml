@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 310
+id: bbf7f4553726528845dc1d9ede8ef34e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-03
+tags:
+    - attack.exfiltration
+    - attack.t1310
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_310.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_310'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
