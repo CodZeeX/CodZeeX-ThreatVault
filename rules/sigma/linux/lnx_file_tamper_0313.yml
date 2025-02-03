@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux File Modification - Pattern 313
+id: 6c38bc12b434662a341d6eacde474cb7
+status: stable
+description: Identifies suspicious Linux event matching EXECUTION
+references:
+    - https://attack.mitre.org/tactics/execution
+author: RobsHs (CodZeeX)
+date: 2025-02-03
+tags:
+    - attack.execution
+logsource:
+    category: file_modification
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_313.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
