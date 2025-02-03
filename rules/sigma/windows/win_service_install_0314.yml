@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 314
+id: 92d296446859910765b7364c0ac9d665
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-03
+tags:
+    - attack.persistence
+    - attack.t1314
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_314.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_314'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
