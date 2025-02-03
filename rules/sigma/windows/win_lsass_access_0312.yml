@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 312
+id: 6d1873f3cf6a8f3bf803257b20b3cf46
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-03
+tags:
+    - attack.initial_access
+    - attack.t1312
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_312.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_312'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
