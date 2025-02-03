@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 326
+id: c6c6de61d85391b9de53117e0ff59f74
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-03
+tags:
+    - attack.persistence
+    - attack.t1326
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_326.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_326'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
