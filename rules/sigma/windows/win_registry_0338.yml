@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 338
+id: ea7223a39d7d15513c90d982a247186c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-04
+tags:
+    - attack.persistence
+    - attack.t1338
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_338.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_338'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
