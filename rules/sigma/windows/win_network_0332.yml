@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 332
+id: 363491c62069f34de7ae73e707d85eff
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-04
+tags:
+    - attack.collection
+    - attack.t1332
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_332.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_332'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
