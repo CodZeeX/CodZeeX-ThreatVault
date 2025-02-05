@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 350
+id: eb3f044ab410cdb446987bc721805348
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-05
+tags:
+    - attack.persistence
+    - attack.t1350
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_350.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_350'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
