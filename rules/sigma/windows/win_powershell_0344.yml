@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 344
+id: c3d63d0cc68a96d4cba10e8c5538876a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-05
+tags:
+    - attack.collection
+    - attack.t1344
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_344.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_344'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
