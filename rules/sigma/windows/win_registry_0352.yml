@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 352
+id: b72bc00fb4e9b543c99bada83b5d91d4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-05
+tags:
+    - attack.defense_evasion
+    - attack.t1352
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_352.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_352'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
