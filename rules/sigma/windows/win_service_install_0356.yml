@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 356
+id: db6fe34b0872d98dbf35e28417d3cd20
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-05
+tags:
+    - attack.collection
+    - attack.t1356
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_356.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_356'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
