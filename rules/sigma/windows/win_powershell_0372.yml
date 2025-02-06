@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 372
+id: d5d5a4ffaabd7b45ce9a6bb00a06c353
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-06
+tags:
+    - attack.initial_access
+    - attack.t1372
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_372.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_372'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
