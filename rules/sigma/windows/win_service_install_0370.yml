@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 370
+id: 8c8772dc11775ed5a07f7e3bf1224db8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-06
+tags:
+    - attack.exfiltration
+    - attack.t1370
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_370.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_370'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
