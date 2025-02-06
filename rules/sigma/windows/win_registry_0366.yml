@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 366
+id: 4ebf56771f365af3e9ceb399c2a66e8c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-06
+tags:
+    - attack.discovery
+    - attack.t1366
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_366.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_366'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
