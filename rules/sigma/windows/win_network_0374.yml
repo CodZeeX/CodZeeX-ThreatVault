@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 374
+id: cb55fd8e342f127c9018be29f276b4b7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-07
+tags:
+    - attack.persistence
+    - attack.t1374
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_374.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_374'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
