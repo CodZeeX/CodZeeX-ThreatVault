@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 382
+id: dfd4fdb8ea9b29b0542e37a8eeb1e0ce
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-07
+tags:
+    - attack.exfiltration
+    - attack.t1382
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_382.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_382'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
