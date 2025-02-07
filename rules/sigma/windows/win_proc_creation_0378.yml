@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 378
+id: 628d642981670977e447eaa0c0022c93
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-07
+tags:
+    - attack.discovery
+    - attack.t1378
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_378.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_378'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
