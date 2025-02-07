@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 380
+id: fe928a610c969810698f85b2f4af2c68
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-07
+tags:
+    - attack.collection
+    - attack.t1380
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_380.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_380'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
