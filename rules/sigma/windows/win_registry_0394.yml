@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 394
+id: 1adfcc0de6fd9fb01c4a82beaaf7c620
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-08
+tags:
+    - attack.exfiltration
+    - attack.t1394
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_394.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_394'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
