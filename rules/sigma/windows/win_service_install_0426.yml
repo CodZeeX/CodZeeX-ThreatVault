@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 426
+id: fc450a5c61405b952666679b4ad22ac5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-10
+tags:
+    - attack.discovery
+    - attack.t1426
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_426.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_426'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
