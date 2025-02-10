@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 416
+id: 4da91a5c5a6e70147a2ea081ae333128
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-10
+tags:
+    - attack.collection
+    - attack.t1416
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_416.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_416'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
