@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 408
+id: ef46495ee6fca404911990e4ea7ba2bd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-10
+tags:
+    - attack.initial_access
+    - attack.t1408
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_408.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_408'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
