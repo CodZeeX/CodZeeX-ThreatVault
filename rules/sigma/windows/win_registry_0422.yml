@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 422
+id: 706d16d8c6822f6c94d9173e76ef570a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-10
+tags:
+    - attack.persistence
+    - attack.t1422
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_422.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_422'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
