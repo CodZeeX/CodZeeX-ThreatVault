@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 412
+id: b289830265125147ee95395fea41f7b5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-10
+tags:
+    - attack.defense_evasion
+    - attack.t1412
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_412.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_412'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
