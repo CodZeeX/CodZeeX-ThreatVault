@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 428
+id: 4cab6f956c13cd7f269961dd4a894968
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-11
+tags:
+    - attack.collection
+    - attack.t1428
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_428.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_428'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
