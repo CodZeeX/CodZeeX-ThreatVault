@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 454
+id: 866ecd6e7fca646d92f58784ab700c41
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-12
+tags:
+    - attack.exfiltration
+    - attack.t1454
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_454.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_454'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
