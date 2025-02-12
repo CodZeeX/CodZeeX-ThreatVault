@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 452
+id: 5a142c4408f2bab9e65e5724b25e1a79
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-12
+tags:
+    - attack.collection
+    - attack.t1452
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_452.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_452'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
