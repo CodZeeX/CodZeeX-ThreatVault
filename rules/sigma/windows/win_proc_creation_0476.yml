@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 476
+id: cb82af2cfa16a5ae53fb8b7cd55faed1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-13
+tags:
+    - attack.collection
+    - attack.t1476
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_476.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_476'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
