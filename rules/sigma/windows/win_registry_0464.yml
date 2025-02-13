@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 464
+id: 42d0e6c3934b9d52f96eb0e94b38f2c1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-13
+tags:
+    - attack.collection
+    - attack.t1464
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_464.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_464'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
