@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 470
+id: 44efe7b2ed2dc73c24db2b18e17f4202
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-13
+tags:
+    - attack.persistence
+    - attack.t1470
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_470.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_470'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
