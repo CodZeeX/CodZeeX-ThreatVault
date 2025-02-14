@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 480
+id: 914e46c67b5a58a1986d76654c38a2f8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-14
+tags:
+    - attack.initial_access
+    - attack.t1480
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_480.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_480'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
