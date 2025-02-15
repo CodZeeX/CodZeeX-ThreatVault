@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 498
+id: e9bd54b97c550f5d9d1a46b8025ed1e7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-15
+tags:
+    - attack.discovery
+    - attack.t1498
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_498.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_498'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
