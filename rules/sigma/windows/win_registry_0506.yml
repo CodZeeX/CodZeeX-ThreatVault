@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 506
+id: f1d2df8b06119dc8d521878e0670449a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-15
+tags:
+    - attack.persistence
+    - attack.t1506
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_506.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_506'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
