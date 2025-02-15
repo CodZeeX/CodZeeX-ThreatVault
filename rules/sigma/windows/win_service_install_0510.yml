@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 510
+id: 299add72be64e8f212f1595b41e2900e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-15
+tags:
+    - attack.discovery
+    - attack.t1510
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_510.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_510'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
