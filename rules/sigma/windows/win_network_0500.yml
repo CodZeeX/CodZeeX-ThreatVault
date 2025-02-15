@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 500
+id: 302777d948c4150ee99f62eda114e86c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-15
+tags:
+    - attack.collection
+    - attack.t1500
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_500.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_500'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
