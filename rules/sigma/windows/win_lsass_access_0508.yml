@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 508
+id: 89ae6436a0949dafca68638bf1ff8bb0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-15
+tags:
+    - attack.defense_evasion
+    - attack.t1508
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_508.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_508'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
