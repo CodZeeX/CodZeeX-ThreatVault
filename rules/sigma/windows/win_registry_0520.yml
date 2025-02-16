@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 520
+id: 52c0c9868e50ed4b6e55ec524a215b29
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-16
+tags:
+    - attack.defense_evasion
+    - attack.t1520
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_520.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_520'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
