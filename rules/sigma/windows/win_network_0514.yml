@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 514
+id: 1669d7484c7bfa7eb43e83842897eed1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-16
+tags:
+    - attack.exfiltration
+    - attack.t1514
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_514.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_514'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
