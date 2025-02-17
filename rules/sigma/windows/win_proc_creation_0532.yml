@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 532
+id: 48baa1c54412cd7e8abb1388b2e9165f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-17
+tags:
+    - attack.defense_evasion
+    - attack.t1532
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_532.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_532'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
