@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 534
+id: 81940672c5b236affed45a32f33f2dbf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-17
+tags:
+    - attack.discovery
+    - attack.t1534
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_534.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_534'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
