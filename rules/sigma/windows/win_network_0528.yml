@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 528
+id: 3b7452d7b34455eb572ff37ecca4ea2b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-17
+tags:
+    - attack.initial_access
+    - attack.t1528
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_528.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_528'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
