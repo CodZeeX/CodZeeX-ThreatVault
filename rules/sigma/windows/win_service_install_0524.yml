@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 524
+id: 97140d7a011151647de1afe1e27057e1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-17
+tags:
+    - attack.collection
+    - attack.t1524
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_524.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_524'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
