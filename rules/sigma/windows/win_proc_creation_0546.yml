@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 546
+id: 18ae911ac074db800f2be9f40b3b9492
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-18
+tags:
+    - attack.discovery
+    - attack.t1546
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_546.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_546'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
