@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 540
+id: cda716f7137f3891670f2917f9704cdf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-18
+tags:
+    - attack.initial_access
+    - attack.t1540
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_540.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_540'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
