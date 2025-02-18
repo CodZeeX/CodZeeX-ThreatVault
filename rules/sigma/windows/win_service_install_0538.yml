@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 538
+id: e7a8d2e4e3bac5756493e80895e479ba
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-18
+tags:
+    - attack.exfiltration
+    - attack.t1538
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_538.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_538'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
