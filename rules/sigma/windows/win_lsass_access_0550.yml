@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 550
+id: 3462369fd24edae128be06ddddae041e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-18
+tags:
+    - attack.exfiltration
+    - attack.t1550
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_550.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_550'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
