@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 536
+id: 014288dc176463ab7425ed1dd8c550a0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-18
+tags:
+    - attack.collection
+    - attack.t1536
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_536.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_536'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
