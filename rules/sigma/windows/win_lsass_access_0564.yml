@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 564
+id: 7369b2a5b5f940cff6dddb7fb5598faa
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-19
+tags:
+    - attack.initial_access
+    - attack.t1564
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_564.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_564'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
