@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 568
+id: d739dd444d0499ef1845c999f4b41e28
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-19
+tags:
+    - attack.defense_evasion
+    - attack.t1568
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_568.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_568'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
