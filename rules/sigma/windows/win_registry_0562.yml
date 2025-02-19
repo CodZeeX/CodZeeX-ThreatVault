@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 562
+id: 50a1f1ee207d548f16538523bb53ba30
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-19
+tags:
+    - attack.exfiltration
+    - attack.t1562
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_562.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_562'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
