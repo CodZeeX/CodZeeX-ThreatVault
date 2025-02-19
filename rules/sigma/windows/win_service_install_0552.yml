@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 552
+id: 76b8fe5995b2d67a8417296f006687e8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-19
+tags:
+    - attack.initial_access
+    - attack.t1552
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_552.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_552'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
