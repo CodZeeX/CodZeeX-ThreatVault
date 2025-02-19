@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 554
+id: ed24268b450d57aaca36b06ce9ea24c6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-19
+tags:
+    - attack.persistence
+    - attack.t1554
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_554.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_554'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
