@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 584
+id: efe80d4c5eb1eea1a056b7fae5ba1ede
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-20
+tags:
+    - attack.collection
+    - attack.t1584
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_584.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_584'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
