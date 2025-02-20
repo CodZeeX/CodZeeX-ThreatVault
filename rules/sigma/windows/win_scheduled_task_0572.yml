@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 572
+id: 7ffefa6b2c5790debed23ceb65fcf948
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-20
+tags:
+    - attack.collection
+    - attack.t1572
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_572.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_572'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
