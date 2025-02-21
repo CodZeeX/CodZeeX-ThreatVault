@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 588
+id: 455ac98c0eab09d7e4f421c2cb4f358a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-21
+tags:
+    - attack.initial_access
+    - attack.t1588
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_588.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_588'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
