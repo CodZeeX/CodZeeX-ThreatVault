@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 598
+id: 4892c646cf6a96e742fe4e4c5c09a3a2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1598
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_598.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_598'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
