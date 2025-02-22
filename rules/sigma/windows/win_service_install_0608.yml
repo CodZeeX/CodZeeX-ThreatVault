@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 608
+id: 772a549fa89bc4003fa050fa6cdff5fb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-22
+tags:
+    - attack.collection
+    - attack.t1608
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_608.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_608'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
