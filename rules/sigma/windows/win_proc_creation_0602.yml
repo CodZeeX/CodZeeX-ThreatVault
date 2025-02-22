@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 602
+id: ed7cc8bb0d87cf56a0905557990f01b0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-22
+tags:
+    - attack.persistence
+    - attack.t1602
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_602.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_602'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
