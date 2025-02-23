@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 618
+id: 94d3536f4d122c3826ce374aa8928201
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-23
+tags:
+    - attack.discovery
+    - attack.t1618
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_618.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_618'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
