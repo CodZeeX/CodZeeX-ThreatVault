@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 626
+id: 387c007209493dbd564a83c04ac720b3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-24
+tags:
+    - attack.persistence
+    - attack.t1626
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_626.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_626'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
