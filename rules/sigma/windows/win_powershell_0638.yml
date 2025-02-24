@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 638
+id: 5ad77198ddc0c3ff0b6a7cdbd5fa9f0e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-24
+tags:
+    - attack.persistence
+    - attack.t1638
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_638.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_638'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
