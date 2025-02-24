@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 622
+id: 5aa26d52dc38c127bd9f5887b1ebf5c9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-24
+tags:
+    - attack.exfiltration
+    - attack.t1622
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_622.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_622'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
