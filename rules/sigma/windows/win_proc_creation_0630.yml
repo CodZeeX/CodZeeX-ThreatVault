@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 630
+id: a5ec4aa7545d1d7b91a3c367e335704a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-24
+tags:
+    - attack.discovery
+    - attack.t1630
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_630.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_630'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
