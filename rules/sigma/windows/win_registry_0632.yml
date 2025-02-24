@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 632
+id: f7b164b7cf94da02032a3a02232f5a92
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-24
+tags:
+    - attack.collection
+    - attack.t1632
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_632.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_632'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
