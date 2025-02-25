@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 666
+id: 926a9f8224fd9cf1e9eca1c99300f54c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-25
+tags:
+    - attack.discovery
+    - attack.t1666
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_666.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_666'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
