@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 646
+id: c3e35feef1dcef6cc061e03762540232
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-25
+tags:
+    - attack.exfiltration
+    - attack.t1646
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_646.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_646'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
