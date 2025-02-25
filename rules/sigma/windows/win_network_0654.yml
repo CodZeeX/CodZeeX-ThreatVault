@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 654
+id: 20eb8eb3da6147526467ac294daac83b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-25
+tags:
+    - attack.discovery
+    - attack.t1654
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_654.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_654'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
