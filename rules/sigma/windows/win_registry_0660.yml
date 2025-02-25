@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 660
+id: 4a4f7132dddd24125306e1fd486858c0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-25
+tags:
+    - attack.initial_access
+    - attack.t1660
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_660.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_660'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
