@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 668
+id: 2923710568af4b2730eff8cd344a7b61
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-26
+tags:
+    - attack.collection
+    - attack.t1668
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_668.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_668'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
