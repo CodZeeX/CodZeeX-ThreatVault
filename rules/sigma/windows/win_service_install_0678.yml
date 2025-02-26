@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 678
+id: b34e506170070b0e50d82bf88728d7b1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-26
+tags:
+    - attack.discovery
+    - attack.t1678
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_678.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_678'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
