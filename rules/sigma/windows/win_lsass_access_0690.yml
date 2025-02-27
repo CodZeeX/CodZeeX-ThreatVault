@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 690
+id: f4f9d5748caaf763819cc51c2785f1ca
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-27
+tags:
+    - attack.discovery
+    - attack.t1690
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_690.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_690'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
