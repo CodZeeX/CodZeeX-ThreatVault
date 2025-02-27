@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 682
+id: 3af2d7b384583d5f3bec1481a97698b6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-27
+tags:
+    - attack.exfiltration
+    - attack.t1682
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_682.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_682'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
