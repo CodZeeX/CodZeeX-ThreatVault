@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 704
+id: 3eb39cb1419eb1d5f3786c9601c26aec
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-02-28
+tags:
+    - attack.collection
+    - attack.t1704
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_704.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_704'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
