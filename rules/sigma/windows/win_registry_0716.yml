@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 716
+id: de5f37d0898b6cb2c291e40211c31225
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-01
+tags:
+    - attack.collection
+    - attack.t1716
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_716.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_716'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
