@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 710
+id: 23eec53c0fc65c05ed9e3de42f9ae4f1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-01
+tags:
+    - attack.persistence
+    - attack.t1710
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_710.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_710'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
