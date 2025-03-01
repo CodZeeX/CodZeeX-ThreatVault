@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 714
+id: bd15c2ff92bcd57038ec6dcda30f898b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-01
+tags:
+    - attack.discovery
+    - attack.t1714
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_714.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_714'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
