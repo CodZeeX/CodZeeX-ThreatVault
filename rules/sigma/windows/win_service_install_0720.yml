@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 720
+id: 6e726b821ebdd9b45d6a458cb85e7a7a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-02
+tags:
+    - attack.initial_access
+    - attack.t1720
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_720.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_720'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
