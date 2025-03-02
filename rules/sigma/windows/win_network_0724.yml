@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 724
+id: 4bd1cee0a38cb21f730a2ff504e7bc6a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-02
+tags:
+    - attack.defense_evasion
+    - attack.t1724
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_724.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_724'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
