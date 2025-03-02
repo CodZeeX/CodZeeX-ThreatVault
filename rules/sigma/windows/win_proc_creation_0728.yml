@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 728
+id: c503a1bb97b5302b931e88d5155b1a77
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-02
+tags:
+    - attack.collection
+    - attack.t1728
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_728.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_728'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
