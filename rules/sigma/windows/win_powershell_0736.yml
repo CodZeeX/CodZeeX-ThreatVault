@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 736
+id: 866d9c8b5308f792d714abf5e6eac01a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-03
+tags:
+    - attack.defense_evasion
+    - attack.t1736
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_736.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_736'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
