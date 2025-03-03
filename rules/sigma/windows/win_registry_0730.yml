@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 730
+id: ea5301de2664424920e40c75b4e9195d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-03
+tags:
+    - attack.exfiltration
+    - attack.t1730
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_730.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_730'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
