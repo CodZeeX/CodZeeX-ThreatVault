@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 762
+id: 9d8baeb1e76f75ffcd353172d5cfa9ce
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-04
+tags:
+    - attack.discovery
+    - attack.t1762
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_762.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_762'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
