@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 758
+id: b3953ceca829a60d8d9f4f43dd292774
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-04
+tags:
+    - attack.persistence
+    - attack.t1758
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_758.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_758'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
