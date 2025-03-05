@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 766
+id: 628185898a34729c476a381d86cc5e97
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-05
+tags:
+    - attack.exfiltration
+    - attack.t1766
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_766.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_766'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
