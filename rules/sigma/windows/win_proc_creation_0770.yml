@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 770
+id: ee4cd48d24eb7a4c30c256cee71916da
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-05
+tags:
+    - attack.persistence
+    - attack.t1770
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_770.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_770'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
