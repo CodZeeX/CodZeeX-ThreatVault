@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 778
+id: 5695891039445037fab13e89225ba519
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-06
+tags:
+    - attack.exfiltration
+    - attack.t1778
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_778.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_778'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
