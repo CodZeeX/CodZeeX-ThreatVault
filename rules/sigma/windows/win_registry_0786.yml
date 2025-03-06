@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 786
+id: 7b69863a1cdf1b662bce3235a450ec89
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-06
+tags:
+    - attack.discovery
+    - attack.t1786
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_786.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_786'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
