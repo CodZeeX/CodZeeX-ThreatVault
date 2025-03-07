@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 806
+id: 8b08d74cc9d12badd82f54b75a58b40f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-07
+tags:
+    - attack.persistence
+    - attack.t1006
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_806.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_806'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
