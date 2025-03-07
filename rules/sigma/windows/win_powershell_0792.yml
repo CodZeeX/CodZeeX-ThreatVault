@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 792
+id: b91b791fb4aa5ae2ae1c06b96ed23b42
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-07
+tags:
+    - attack.initial_access
+    - attack.t1792
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_792.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_792'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
