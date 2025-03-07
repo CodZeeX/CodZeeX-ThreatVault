@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 804
+id: 42c30fa8e223304679af5d606ae94b90
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-07
+tags:
+    - attack.initial_access
+    - attack.t1004
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_804.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_804'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
