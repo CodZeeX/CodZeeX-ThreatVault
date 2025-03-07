@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 802
+id: 7a013e6e9f6869f3b4b4932dd5ea4f04
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-07
+tags:
+    - attack.exfiltration
+    - attack.t1002
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_802.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_802'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
