@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 812
+id: 157e76088a7ab5a36a2c1f63164de87a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-08
+tags:
+    - attack.collection
+    - attack.t1012
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_812.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_812'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
