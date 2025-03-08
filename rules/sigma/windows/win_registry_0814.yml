@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 814
+id: 263264473aa69c0dc1dbc4235ea1fa97
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-08
+tags:
+    - attack.exfiltration
+    - attack.t1014
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_814.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_814'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
