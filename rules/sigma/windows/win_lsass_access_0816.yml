@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 816
+id: fa53c451e51043cf3d9dc1e0253b5c82
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-08
+tags:
+    - attack.initial_access
+    - attack.t1016
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_816.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_816'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
