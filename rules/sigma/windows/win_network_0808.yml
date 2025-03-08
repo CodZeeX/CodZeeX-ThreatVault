@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 808
+id: 16ae532a40489e23b07de3bfb9a9b9c2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-08
+tags:
+    - attack.defense_evasion
+    - attack.t1008
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_808.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_808'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
