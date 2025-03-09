@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 822
+id: 1be4a89c85a7339c9315e25f86fc0e1e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-09
+tags:
+    - attack.discovery
+    - attack.t1022
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_822.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_822'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
