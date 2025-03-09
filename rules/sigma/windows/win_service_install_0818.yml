@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 818
+id: 9996434595a0829aea1566da1b07726e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-09
+tags:
+    - attack.persistence
+    - attack.t1018
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_818.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_818'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
