@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 820
+id: 4f13a34c16d69b8ed181d526c7f6cfe1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-09
+tags:
+    - attack.defense_evasion
+    - attack.t1020
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_820.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_820'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
