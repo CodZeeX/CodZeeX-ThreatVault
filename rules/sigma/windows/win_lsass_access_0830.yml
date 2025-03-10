@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 830
+id: 87385a23f935b6840a6c437625501e62
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-10
+tags:
+    - attack.persistence
+    - attack.t1030
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_830.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_830'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
