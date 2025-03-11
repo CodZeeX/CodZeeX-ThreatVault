@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 844
+id: 5495c9924fe274052bd33a83c3f76a0a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-11
+tags:
+    - attack.defense_evasion
+    - attack.t1044
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_844.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_844'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
