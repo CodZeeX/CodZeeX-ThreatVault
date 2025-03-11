@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 858
+id: 0d8be8d0daec068cfde333ad764dfa32
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-11
+tags:
+    - attack.discovery
+    - attack.t1058
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_858.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_858'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
