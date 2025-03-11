@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 846
+id: 0594dfbc51a183273d7b66e1f96e90cb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-11
+tags:
+    - attack.discovery
+    - attack.t1046
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_846.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_846'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
