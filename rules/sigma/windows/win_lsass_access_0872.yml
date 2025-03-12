@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 872
+id: 342f44d26cf416b6f99c416b38a29da3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-12
+tags:
+    - attack.collection
+    - attack.t1072
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_872.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_872'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
