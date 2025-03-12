@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 870
+id: 1eec273deb99925d0a2ab4c1d8f27345
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-12
+tags:
+    - attack.discovery
+    - attack.t1070
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_870.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_870'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
