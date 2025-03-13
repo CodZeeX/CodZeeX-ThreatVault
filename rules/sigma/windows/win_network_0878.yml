@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 878
+id: e10b7b7d4523689d47bea5ac9d978e6a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-13
+tags:
+    - attack.persistence
+    - attack.t1078
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_878.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_878'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
