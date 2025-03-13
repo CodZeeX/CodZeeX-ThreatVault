@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 884
+id: f1f98c34a232667634789e0a527ab17e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-13
+tags:
+    - attack.collection
+    - attack.t1084
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_884.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_884'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
