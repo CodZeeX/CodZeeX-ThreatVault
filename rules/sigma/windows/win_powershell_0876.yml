@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 876
+id: a4a89546306164b11fe370f49a8e354e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-13
+tags:
+    - attack.initial_access
+    - attack.t1076
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_876.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_876'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
