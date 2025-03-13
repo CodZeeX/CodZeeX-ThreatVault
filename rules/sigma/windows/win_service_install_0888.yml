@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 888
+id: 5073c572161d2d310697ff6a89b77e0c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-13
+tags:
+    - attack.initial_access
+    - attack.t1088
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_888.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_888'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
