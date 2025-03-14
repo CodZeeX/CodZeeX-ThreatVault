@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 906
+id: 5fccac0ed58c2c887f8bce3f3dc9dfdf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-14
+tags:
+    - attack.discovery
+    - attack.t1106
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_906.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_906'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
