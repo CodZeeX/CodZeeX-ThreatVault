@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 904
+id: 6587fdc19cd43590668415d12fae3149
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-14
+tags:
+    - attack.defense_evasion
+    - attack.t1104
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_904.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_904'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
