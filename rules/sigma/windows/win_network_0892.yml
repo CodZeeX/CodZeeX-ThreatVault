@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 892
+id: 48f193caf943157cc3234cae5cb4f6a5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-14
+tags:
+    - attack.defense_evasion
+    - attack.t1092
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_892.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_892'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
