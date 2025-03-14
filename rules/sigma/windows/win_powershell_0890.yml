@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 890
+id: add0b3ece3644ff0bea97bc471c0c3eb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-14
+tags:
+    - attack.persistence
+    - attack.t1090
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_890.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_890'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
