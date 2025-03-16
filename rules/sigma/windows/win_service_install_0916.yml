@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 916
+id: 3e736ad7533f43fc18156d4420694b76
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-16
+tags:
+    - attack.defense_evasion
+    - attack.t1116
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_916.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_916'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
