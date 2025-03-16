@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 914
+id: 30368af5a9049b02a40fa63a662134ea
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-16
+tags:
+    - attack.persistence
+    - attack.t1114
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_914.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_914'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
