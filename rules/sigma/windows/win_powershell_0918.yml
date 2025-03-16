@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 918
+id: 8d54c10f75bd7ea8eb1fdd44b2975f54
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-16
+tags:
+    - attack.discovery
+    - attack.t1118
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_918.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_918'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
