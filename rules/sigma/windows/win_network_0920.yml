@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 920
+id: fe6d713487805cee252d51ff223c8c8b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-17
+tags:
+    - attack.collection
+    - attack.t1120
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_920.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_920'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
