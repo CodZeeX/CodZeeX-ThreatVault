@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 924
+id: 1b8781497f5cc385b179f35e95d35c53
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-17
+tags:
+    - attack.initial_access
+    - attack.t1124
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_924.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_924'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
