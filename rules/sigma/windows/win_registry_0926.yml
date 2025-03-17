@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 926
+id: 44c4db6604b81e13ed81453ae56e63a0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-17
+tags:
+    - attack.persistence
+    - attack.t1126
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_926.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_926'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
