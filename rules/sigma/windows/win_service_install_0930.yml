@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 930
+id: d3b64617c509680c7ba08cf0d862b273
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-17
+tags:
+    - attack.discovery
+    - attack.t1130
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_930.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_930'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
