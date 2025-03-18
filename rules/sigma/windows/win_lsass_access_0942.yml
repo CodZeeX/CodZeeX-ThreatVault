@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 942
+id: 1a3b1eeb306050ef8db67d123eb7812c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.discovery
+    - attack.t1142
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_942.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_942'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
