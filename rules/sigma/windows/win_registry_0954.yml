@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 954
+id: eb8b8c0cd936ee1adf23b90d77909ba6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.discovery
+    - attack.t1154
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_954.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_954'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
