@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 940
+id: 40bbcb69c73b1326bf4022ec159a1ccf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.defense_evasion
+    - attack.t1140
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_940.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_940'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
