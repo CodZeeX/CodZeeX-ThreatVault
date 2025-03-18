@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 946
+id: 7ab26243a5826135ea419befd43793d3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.exfiltration
+    - attack.t1146
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_946.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_946'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
