@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 938
+id: d73055e8b0d1454057b4f87b7c3ec64a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.persistence
+    - attack.t1138
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_938.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_938'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
