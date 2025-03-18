@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 948
+id: 5b851320db0cfb0f6ef9798c0c288725
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.initial_access
+    - attack.t1148
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_948.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_948'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
