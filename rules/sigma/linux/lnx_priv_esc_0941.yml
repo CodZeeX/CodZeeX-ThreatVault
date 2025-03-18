@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 941
+id: a840f6d1b61299cb1b6991a94c24ea15
+status: stable
+description: Identifies suspicious Linux event matching CREDENTIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/credential_access
+author: RobsHs (CodZeeX)
+date: 2025-03-18
+tags:
+    - attack.credential_access
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_941.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
