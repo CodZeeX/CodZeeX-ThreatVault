@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 959
+id: 0b9c7e42b3b5ed6d4c8794cdcd455bf0
+status: stable
+description: Identifies suspicious Linux event matching IMPACT
+references:
+    - https://attack.mitre.org/tactics/impact
+author: RobsHs (CodZeeX)
+date: 2025-03-19
+tags:
+    - attack.impact
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_959.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
