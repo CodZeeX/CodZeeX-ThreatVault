@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 982
+id: 76f8961d872b364dff360e7528ae8572
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-20
+tags:
+    - attack.exfiltration
+    - attack.t1182
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_982.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_982'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
