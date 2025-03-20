@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 970
+id: 0dbd6e40c83da93d2b75ce9e11c76beb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-20
+tags:
+    - attack.exfiltration
+    - attack.t1170
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_970.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_970'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
