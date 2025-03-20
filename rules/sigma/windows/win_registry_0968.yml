@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 968
+id: 84b5687040d82b9cc76913792ebb5273
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-20
+tags:
+    - attack.collection
+    - attack.t1168
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_968.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_968'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
