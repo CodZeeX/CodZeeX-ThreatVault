@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 984
+id: 3b7253d243bf67c4a38bad538f6bafe8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-20
+tags:
+    - attack.initial_access
+    - attack.t1184
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_984.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_984'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
