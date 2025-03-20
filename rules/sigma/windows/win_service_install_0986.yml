@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 986
+id: d376212bfeb14660a1450803f18e390c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-20
+tags:
+    - attack.persistence
+    - attack.t1186
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_986.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_986'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
