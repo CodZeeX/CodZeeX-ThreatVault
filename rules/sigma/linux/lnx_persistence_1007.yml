@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Persistence Cron - Pattern 1007
+id: 3d9bf43cf508449ffbb8df6232fda708
+status: stable
+description: Identifies suspicious Linux event matching IMPACT
+references:
+    - https://attack.mitre.org/tactics/impact
+author: RobsHs (CodZeeX)
+date: 2025-03-21
+tags:
+    - attack.impact
+logsource:
+    category: persistence_cron
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1007.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
