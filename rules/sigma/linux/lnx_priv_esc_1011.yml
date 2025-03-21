@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 1011
+id: 012674478554424cf5a56cee082fb86c
+status: stable
+description: Identifies suspicious Linux event matching PRIVILEGE_ESCALATION
+references:
+    - https://attack.mitre.org/tactics/privilege_escalation
+author: RobsHs (CodZeeX)
+date: 2025-03-21
+tags:
+    - attack.privilege_escalation
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1011.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
