@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1010
+id: 62a5839468c323d305b2f67509076a6c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-21
+tags:
+    - attack.persistence
+    - attack.t1210
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1010.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1010'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
