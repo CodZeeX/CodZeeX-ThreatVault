@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1028
+id: db7d0086e18ab688f13e6360756ce714
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-22
+tags:
+    - attack.collection
+    - attack.t1228
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1028.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1028'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
