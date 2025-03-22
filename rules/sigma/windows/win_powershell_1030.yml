@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1030
+id: d269366228a69f217147ea3a316576db
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-22
+tags:
+    - attack.exfiltration
+    - attack.t1230
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1030.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1030'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
