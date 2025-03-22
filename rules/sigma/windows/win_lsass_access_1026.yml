@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1026
+id: 07b6f1c2508c76e472a6645ca99afd0d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-22
+tags:
+    - attack.discovery
+    - attack.t1226
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1026.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1026'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
