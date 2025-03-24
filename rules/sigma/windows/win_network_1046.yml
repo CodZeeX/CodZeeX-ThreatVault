@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1046
+id: cd4be7bd476d9a3eaba50c65ab610567
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-24
+tags:
+    - attack.persistence
+    - attack.t1246
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1046.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1046'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
