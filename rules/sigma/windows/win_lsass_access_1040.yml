@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1040
+id: 563e357fc9cd98044b0af900b6ed2bac
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-24
+tags:
+    - attack.collection
+    - attack.t1240
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1040.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1040'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
