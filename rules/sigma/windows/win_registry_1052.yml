@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1052
+id: cbecb5f2ff5a17940f8c458b91f8c59c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-24
+tags:
+    - attack.collection
+    - attack.t1252
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1052.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1052'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
