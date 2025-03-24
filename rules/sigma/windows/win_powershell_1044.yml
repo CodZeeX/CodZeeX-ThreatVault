@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1044
+id: 80da1bb1c663e6b4323ad88a4f2af332
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-24
+tags:
+    - attack.initial_access
+    - attack.t1244
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1044.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1044'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
