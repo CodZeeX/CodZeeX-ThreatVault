@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1060
+id: 7e46a30bf44c13951f86fe1d81f55858
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-25
+tags:
+    - attack.defense_evasion
+    - attack.t1260
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1060.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1060'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
