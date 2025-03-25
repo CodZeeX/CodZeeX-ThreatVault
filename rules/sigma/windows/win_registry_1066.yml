@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1066
+id: d74df88256d9abe5da291fc47ec7f393
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-25
+tags:
+    - attack.exfiltration
+    - attack.t1266
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1066.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1066'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
