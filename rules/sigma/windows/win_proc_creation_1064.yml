@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1064
+id: 09452f4e98d1fba35e3fdcfa9e05eea6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-25
+tags:
+    - attack.collection
+    - attack.t1264
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1064.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1064'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
