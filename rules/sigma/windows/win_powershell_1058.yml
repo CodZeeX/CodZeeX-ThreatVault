@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1058
+id: 3def3993a2645256488c324ae066824e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-25
+tags:
+    - attack.persistence
+    - attack.t1258
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1058.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1058'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
