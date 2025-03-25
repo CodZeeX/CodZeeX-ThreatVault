@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1068
+id: b9cacf2ccac0428296c1addb22f0fc5d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-25
+tags:
+    - attack.initial_access
+    - attack.t1268
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1068.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1068'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
