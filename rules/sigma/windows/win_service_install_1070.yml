@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1070
+id: 88ea71920146d4a2171e7ee093eb2197
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-26
+tags:
+    - attack.persistence
+    - attack.t1270
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1070.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1070'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
