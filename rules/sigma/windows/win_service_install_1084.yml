@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1084
+id: cc8a0994a90b5625de0ccfbc7c5505b8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-26
+tags:
+    - attack.defense_evasion
+    - attack.t1284
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1084.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1084'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
