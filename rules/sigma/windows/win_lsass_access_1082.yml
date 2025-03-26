@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1082
+id: e0a432deb984c3d58f8ddd2c2b0059df
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-26
+tags:
+    - attack.persistence
+    - attack.t1282
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1082.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1082'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
