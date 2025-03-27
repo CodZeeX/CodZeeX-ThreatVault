@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1094
+id: 93ec39f4ed7ec821bbcf337fbcf5f64a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-27
+tags:
+    - attack.persistence
+    - attack.t1294
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1094.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1094'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
