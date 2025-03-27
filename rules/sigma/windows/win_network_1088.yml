@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1088
+id: ebea19d3909b9ea4d61afad55e802e96
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-27
+tags:
+    - attack.collection
+    - attack.t1288
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1088.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1088'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
