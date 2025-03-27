@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1092
+id: 6877a1cedd5fbbc700ab4a99907b0ca1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-27
+tags:
+    - attack.initial_access
+    - attack.t1292
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1092.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1092'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
