@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1086
+id: 33603b2aa0709ac9656f966a663deac4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-27
+tags:
+    - attack.discovery
+    - attack.t1286
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1086.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1086'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
