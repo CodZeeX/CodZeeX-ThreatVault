@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1112
+id: af3b0115b1d7dccdaef284c39e55a562
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-28
+tags:
+    - attack.collection
+    - attack.t1312
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1112.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1112'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
