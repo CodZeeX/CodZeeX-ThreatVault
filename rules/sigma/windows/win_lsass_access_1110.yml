@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1110
+id: 9e3fe095c61d42f6530c6555bf76ec21
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-28
+tags:
+    - attack.discovery
+    - attack.t1310
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1110.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1110'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
