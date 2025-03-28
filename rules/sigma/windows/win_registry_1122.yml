@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1122
+id: e60dba174a18d39ddc27623da5c76637
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-28
+tags:
+    - attack.discovery
+    - attack.t1322
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1122.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1122'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
