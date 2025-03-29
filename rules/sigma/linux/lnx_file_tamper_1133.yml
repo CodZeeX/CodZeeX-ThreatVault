@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux File Modification - Pattern 1133
+id: 1424e1a4df6afa70a4e3ee0e571aa199
+status: stable
+description: Identifies suspicious Linux event matching CREDENTIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/credential_access
+author: RobsHs (CodZeeX)
+date: 2025-03-29
+tags:
+    - attack.credential_access
+logsource:
+    category: file_modification
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1133.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
