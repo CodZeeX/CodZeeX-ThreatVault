@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1140
+id: bf55b53abc627b9fd725c58d917bad86
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-30
+tags:
+    - attack.initial_access
+    - attack.t1340
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1140.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1140'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
