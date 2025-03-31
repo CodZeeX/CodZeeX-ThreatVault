@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1158
+id: 438f32b50f80f2688983414f91d3603f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-31
+tags:
+    - attack.discovery
+    - attack.t1358
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1158.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1158'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
