@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1150
+id: 22845a9ffb42a2164c9f94ecd603f561
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-03-31
+tags:
+    - attack.exfiltration
+    - attack.t1350
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1150.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1150'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
