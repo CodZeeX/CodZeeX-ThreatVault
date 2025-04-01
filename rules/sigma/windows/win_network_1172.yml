@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1172
+id: e3b819c37988fd241b90e45aa85de436
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-01
+tags:
+    - attack.collection
+    - attack.t1372
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1172.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1172'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
