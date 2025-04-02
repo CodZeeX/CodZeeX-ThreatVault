@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Persistence Cron - Pattern 1177
+id: e403f05c52759402ad5b69082f5f08d1
+status: stable
+description: Identifies suspicious Linux event matching EXECUTION
+references:
+    - https://attack.mitre.org/tactics/execution
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.execution
+logsource:
+    category: persistence_cron
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1177.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
