@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1184
+id: 9464da87f31d8a373cbc31e14585ae5f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.collection
+    - attack.t1384
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1184.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1184'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
