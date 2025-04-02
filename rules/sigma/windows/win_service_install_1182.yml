@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1182
+id: ffb6fe34c5f9a0baeefb4fc4bbfab762
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.discovery
+    - attack.t1382
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1182.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1182'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
