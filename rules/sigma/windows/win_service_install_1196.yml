@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1196
+id: f5849c248d417447ae738d32a412eb50
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.collection
+    - attack.t1396
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1196.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1196'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
