@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1190
+id: 4db82d633f2ed890fdecbeb98b7e3119
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.persistence
+    - attack.t1390
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1190.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1190'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
