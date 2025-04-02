@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1200
+id: 0878f4ac5fb5db0403596a9f6dc332ec
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.initial_access
+    - attack.t1400
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1200.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1200'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
