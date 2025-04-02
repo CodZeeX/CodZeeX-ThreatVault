@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1186
+id: 2634260509f1b494c9d0edbda67ecdb0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-02
+tags:
+    - attack.exfiltration
+    - attack.t1386
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1186.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1186'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
