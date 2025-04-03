@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1208
+id: 01748ae024d046aef392e3b9e2a649e8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-03
+tags:
+    - attack.collection
+    - attack.t1408
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1208.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1208'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
