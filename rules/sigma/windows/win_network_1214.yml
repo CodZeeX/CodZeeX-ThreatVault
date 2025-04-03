@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1214
+id: 18400e0fb43c8715e8f036640bd2108f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-03
+tags:
+    - attack.persistence
+    - attack.t1414
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1214.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1214'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
