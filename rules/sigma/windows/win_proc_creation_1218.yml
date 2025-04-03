@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1218
+id: 0ffd5d90692058ba71c6b6c0f43048dd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-03
+tags:
+    - attack.discovery
+    - attack.t1418
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1218.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1218'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
