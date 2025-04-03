@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1226
+id: 49344a3fee69c4c1ecec6cc35b9b3654
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-03
+tags:
+    - attack.persistence
+    - attack.t1426
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1226.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1226'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
