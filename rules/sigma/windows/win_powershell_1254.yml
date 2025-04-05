@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1254
+id: 505babccc84db04696ff129bbcff8584
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-05
+tags:
+    - attack.discovery
+    - attack.t1454
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1254.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1254'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
