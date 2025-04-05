@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1252
+id: 9087a2222b1c924356d0df2c9b9f4320
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-05
+tags:
+    - attack.defense_evasion
+    - attack.t1452
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1252.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1252'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
