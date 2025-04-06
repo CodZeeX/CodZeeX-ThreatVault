@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1268
+id: a7b0c8fdc522ebddee37ef4b18e94a04
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-06
+tags:
+    - attack.collection
+    - attack.t1468
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1268.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1268'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
