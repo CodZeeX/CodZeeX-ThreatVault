@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1278
+id: d1b0e1256f43d6e684ec2481f3660fd9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-07
+tags:
+    - attack.discovery
+    - attack.t1478
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1278.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1278'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
