@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1274
+id: 5a9123bcf2ec57619a4706788b328625
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-07
+tags:
+    - attack.persistence
+    - attack.t1474
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1274.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1274'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
