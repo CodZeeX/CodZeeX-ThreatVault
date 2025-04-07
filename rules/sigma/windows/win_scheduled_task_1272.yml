@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 1272
+id: 9f12de91048611c6958e4c5d3ca6eabd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-07
+tags:
+    - attack.initial_access
+    - attack.t1472
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_1272.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1272'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
