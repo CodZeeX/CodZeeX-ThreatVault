@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1288
+id: a0e72e8d7e828cc8d4ed33c86d145e81
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-08
+tags:
+    - attack.defense_evasion
+    - attack.t1488
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1288.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1288'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
