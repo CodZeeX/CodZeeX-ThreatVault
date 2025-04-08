@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1284
+id: 000da50a648921790b58cb9e28430508
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-08
+tags:
+    - attack.initial_access
+    - attack.t1484
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1284.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1284'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
