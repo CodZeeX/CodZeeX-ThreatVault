@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1290
+id: 83f80e33fc1ebc93a6bae3266c7c852b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-08
+tags:
+    - attack.discovery
+    - attack.t1490
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1290.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1290'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
