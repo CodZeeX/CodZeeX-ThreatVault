@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1312
+id: 310fe383d2c2320d4cc88138158a384c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-09
+tags:
+    - attack.defense_evasion
+    - attack.t1512
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1312.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1312'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
