@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1316
+id: ee59846cfe4ea2c11b342025793310a9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-09
+tags:
+    - attack.collection
+    - attack.t1516
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1316.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1316'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
