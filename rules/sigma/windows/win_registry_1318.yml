@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1318
+id: 46d7e4089e45345c6a1c0c453e1ae8ea
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-09
+tags:
+    - attack.exfiltration
+    - attack.t1518
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1318.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1318'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
