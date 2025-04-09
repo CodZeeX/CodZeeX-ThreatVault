@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1320
+id: 84136e46464057a896013c627993d198
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-09
+tags:
+    - attack.initial_access
+    - attack.t1520
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1320.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1320'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
