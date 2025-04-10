@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1336
+id: 63dc840521424aaec0baf9e2aabba707
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-10
+tags:
+    - attack.defense_evasion
+    - attack.t1536
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1336.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1336'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
