@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1326
+id: 8d25fa6d5bcdb2273c5b57d7a493d917
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-10
+tags:
+    - attack.discovery
+    - attack.t1526
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1326.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1326'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
