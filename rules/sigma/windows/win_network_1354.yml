@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1354
+id: 5c9387e3d5931bd310c4f7a807b2d961
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-11
+tags:
+    - attack.exfiltration
+    - attack.t1554
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1354.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1354'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
