@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1350
+id: 9ae9b77c587f30824515ddedfffdbc84
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-11
+tags:
+    - attack.discovery
+    - attack.t1550
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1350.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1350'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
