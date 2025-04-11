@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1346
+id: 076a62e074b06b6690c7bd0be24777c2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-11
+tags:
+    - attack.persistence
+    - attack.t1546
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1346.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1346'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
