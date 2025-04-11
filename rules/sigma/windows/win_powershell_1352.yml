@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1352
+id: c4f73d184ee9617c1660fda6dc1315ed
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-11
+tags:
+    - attack.collection
+    - attack.t1552
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1352.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1352'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
