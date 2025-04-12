@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1362
+id: b9160cb3b2977ce5b81f32597e638487
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-12
+tags:
+    - attack.discovery
+    - attack.t1562
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1362.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1362'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
