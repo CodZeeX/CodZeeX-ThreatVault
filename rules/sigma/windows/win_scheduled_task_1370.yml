@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 1370
+id: c39560adf35bf58a2dd1dc8db4f30cf1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-12
+tags:
+    - attack.persistence
+    - attack.t1570
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_1370.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1370'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
