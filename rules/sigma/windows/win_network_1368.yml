@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1368
+id: 2a45c4187da143f080350d524e459e74
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-12
+tags:
+    - attack.initial_access
+    - attack.t1568
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1368.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1368'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
