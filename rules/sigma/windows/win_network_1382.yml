@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1382
+id: b49b390bc3579278ed505f5dc4d9b16b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-13
+tags:
+    - attack.persistence
+    - attack.t1582
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1382.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1382'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
