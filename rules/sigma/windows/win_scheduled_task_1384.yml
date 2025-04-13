@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 1384
+id: c94591ae47ee6d9675b9b87deaa6b8e2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-13
+tags:
+    - attack.defense_evasion
+    - attack.t1584
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_1384.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1384'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
