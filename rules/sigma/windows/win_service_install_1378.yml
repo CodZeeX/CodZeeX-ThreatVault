@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1378
+id: ca348588a17c38cbab6f815f070ca5b3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-13
+tags:
+    - attack.exfiltration
+    - attack.t1578
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1378.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1378'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
