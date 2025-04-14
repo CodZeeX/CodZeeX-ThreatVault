@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1394
+id: 4c5c7c1e7b7fe575e8250a914d770b0e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-14
+tags:
+    - attack.persistence
+    - attack.t1594
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1394.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1394'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
