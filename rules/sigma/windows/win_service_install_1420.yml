@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1420
+id: fad58e5fe9178dd6b45fa6c03cb59146
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-15
+tags:
+    - attack.defense_evasion
+    - attack.t1620
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1420.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1420'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
