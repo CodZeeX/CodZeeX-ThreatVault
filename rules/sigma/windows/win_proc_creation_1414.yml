@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1414
+id: 35fd3cc10088765c8d3cb6cd0d0a8354
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-15
+tags:
+    - attack.exfiltration
+    - attack.t1614
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1414.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1414'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
