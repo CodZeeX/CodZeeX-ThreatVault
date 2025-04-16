@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1436
+id: cecdfed949793f3e91e44955f042a6cf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-16
+tags:
+    - attack.collection
+    - attack.t1636
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1436.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1436'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
