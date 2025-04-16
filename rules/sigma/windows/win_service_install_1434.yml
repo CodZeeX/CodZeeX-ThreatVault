@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1434
+id: af5cfc51a06fb4e95d2b39cfac442764
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-16
+tags:
+    - attack.discovery
+    - attack.t1634
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1434.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1434'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
