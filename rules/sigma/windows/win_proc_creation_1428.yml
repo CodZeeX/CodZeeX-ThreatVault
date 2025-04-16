@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1428
+id: c73b26075b24ae66e944fb543e7fd67b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-16
+tags:
+    - attack.initial_access
+    - attack.t1628
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1428.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1428'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
