@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1438
+id: 563d61606b41cb7f058d171591159a6e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-16
+tags:
+    - attack.exfiltration
+    - attack.t1638
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1438.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1438'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
