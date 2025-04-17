@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1462
+id: 517cc08b87d76dd848b195f385158043
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-17
+tags:
+    - attack.exfiltration
+    - attack.t1662
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1462.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1462'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
