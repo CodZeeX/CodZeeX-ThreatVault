@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1452
+id: abd8fc15686d85393cb0662c57ee45e2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-17
+tags:
+    - attack.initial_access
+    - attack.t1652
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1452.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1452'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
