@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1472
+id: 8e52e71dbb1ed805724936270269286f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-18
+tags:
+    - attack.collection
+    - attack.t1672
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1472.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1472'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
