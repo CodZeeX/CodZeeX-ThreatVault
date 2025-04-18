@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1466
+id: 3fd1b6abe3196820660da9d1dc8a883e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-18
+tags:
+    - attack.persistence
+    - attack.t1666
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1466.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1466'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
