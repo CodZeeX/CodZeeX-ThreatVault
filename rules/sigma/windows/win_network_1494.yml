@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1494
+id: 86de2e10ccc813040d15c9225e24ae9f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-19
+tags:
+    - attack.discovery
+    - attack.t1694
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1494.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1494'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
