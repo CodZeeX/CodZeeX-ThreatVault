@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1486
+id: 2fd12e4f2f16454fcb495648ad57bbe9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-19
+tags:
+    - attack.exfiltration
+    - attack.t1686
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1486.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1486'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
