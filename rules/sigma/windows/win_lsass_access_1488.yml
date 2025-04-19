@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1488
+id: b3c4e7f18ca89005150b1fc94ed74bfc
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-19
+tags:
+    - attack.initial_access
+    - attack.t1688
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1488.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1488'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
