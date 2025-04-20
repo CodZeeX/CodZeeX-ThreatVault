@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1502
+id: 78e31190bd14099f816727594a713f25
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-20
+tags:
+    - attack.persistence
+    - attack.t1702
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1502.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1502'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
