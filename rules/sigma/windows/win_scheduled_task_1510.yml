@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 1510
+id: fd6f7b6cb29da49c385c5c1a8280ae43
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-21
+tags:
+    - attack.exfiltration
+    - attack.t1710
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_1510.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1510'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
