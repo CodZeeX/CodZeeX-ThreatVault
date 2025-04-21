@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1522
+id: b74445cb1088b5f1eb31a7a4ee90f7eb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-21
+tags:
+    - attack.exfiltration
+    - attack.t1722
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1522.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1522'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
