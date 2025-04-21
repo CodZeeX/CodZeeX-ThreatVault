@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1514
+id: a4ab691acfefe3c90cc099299299c16d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-21
+tags:
+    - attack.persistence
+    - attack.t1714
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1514.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1514'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
