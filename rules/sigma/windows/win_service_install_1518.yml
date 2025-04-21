@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1518
+id: 09e9873ed22c2b0647f11fc1940cb215
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-21
+tags:
+    - attack.discovery
+    - attack.t1718
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1518.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1518'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
