@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1534
+id: 39ed05e84b2be62a2b556fa5ac06d8bd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-22
+tags:
+    - attack.exfiltration
+    - attack.t1734
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1534.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1534'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
