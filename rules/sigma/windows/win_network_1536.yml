@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1536
+id: 685ef87c56e13d81df97da921045cbbc
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-22
+tags:
+    - attack.initial_access
+    - attack.t1736
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1536.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1536'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
