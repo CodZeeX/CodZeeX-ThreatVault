@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1528
+id: 8ebc001df09402018e97c28a8f412311
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-22
+tags:
+    - attack.defense_evasion
+    - attack.t1728
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1528.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1528'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
