@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1532
+id: d539b641d8c6d186977351ea6488a509
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-22
+tags:
+    - attack.collection
+    - attack.t1732
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1532.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1532'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
