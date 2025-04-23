@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1550
+id: cf000a0a752e2641ab50b1a7355c276f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-23
+tags:
+    - attack.persistence
+    - attack.t1750
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1550.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1550'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
