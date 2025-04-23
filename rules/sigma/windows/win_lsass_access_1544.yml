@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1544
+id: 404fcbbef3d8d550af318a89a2187389
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-23
+tags:
+    - attack.collection
+    - attack.t1744
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1544.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1544'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
