@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1576
+id: f5c32d809a18c33442fdbe2c67c9695a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-24
+tags:
+    - attack.defense_evasion
+    - attack.t1776
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1576.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1576'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
