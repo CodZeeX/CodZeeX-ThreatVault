@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1600
+id: 226163a9dede9f8dab91b8eb04639808
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-25
+tags:
+    - attack.defense_evasion
+    - attack.t1000
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1600.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1600'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
