@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1598
+id: d919df66238f4dcc3914ba4dccba3185
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-25
+tags:
+    - attack.persistence
+    - attack.t1798
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1598.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1598'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
