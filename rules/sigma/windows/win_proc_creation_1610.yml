@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1610
+id: cf9f3dbfd96254e0384d93c0bfae1fe7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-26
+tags:
+    - attack.persistence
+    - attack.t1010
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1610.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1610'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
