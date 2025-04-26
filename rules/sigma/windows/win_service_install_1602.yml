@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1602
+id: a21a1c921946468fd986ec2efb0e5c11
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-26
+tags:
+    - attack.discovery
+    - attack.t1002
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1602.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1602'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
