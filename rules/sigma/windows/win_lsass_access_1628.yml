@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1628
+id: 993ff9d8749a5e58a021fd2292dd0892
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-27
+tags:
+    - attack.collection
+    - attack.t1028
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1628.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1628'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
