@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1648
+id: fcabe5f03ca1c780c760cfce66f3c0b6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-28
+tags:
+    - attack.defense_evasion
+    - attack.t1048
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1648.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1648'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
