@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1658
+id: 23836593aba10211b9acd64783b90a2a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-29
+tags:
+    - attack.persistence
+    - attack.t1058
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1658.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1658'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
