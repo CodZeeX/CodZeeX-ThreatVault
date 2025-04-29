@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1662
+id: d97b7b93d696b468441fc19bad8fe58b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-29
+tags:
+    - attack.discovery
+    - attack.t1062
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1662.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1662'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
