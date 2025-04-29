@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1666
+id: d47769fa9de66925b79aafa0dd48ce59
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-29
+tags:
+    - attack.exfiltration
+    - attack.t1066
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1666.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1666'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
