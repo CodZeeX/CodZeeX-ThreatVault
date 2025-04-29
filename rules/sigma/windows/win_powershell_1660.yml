@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1660
+id: 9880eb3a3eb1009da5f108560c885e89
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-29
+tags:
+    - attack.defense_evasion
+    - attack.t1060
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1660.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1660'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
