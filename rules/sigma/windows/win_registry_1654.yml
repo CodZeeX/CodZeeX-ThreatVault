@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1654
+id: 6d0a254a6e38f52d5adbff944dc8538d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-29
+tags:
+    - attack.exfiltration
+    - attack.t1054
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1654.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1654'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
