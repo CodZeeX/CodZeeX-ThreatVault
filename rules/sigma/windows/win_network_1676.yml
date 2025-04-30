@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1676
+id: fe1ca98e3c6736ac2dc69d0831cfb333
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-30
+tags:
+    - attack.collection
+    - attack.t1076
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1676.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1676'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
