@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1686
+id: a452f48d2a1f1be8d9302c0142417535
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-30
+tags:
+    - attack.discovery
+    - attack.t1086
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1686.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1686'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
