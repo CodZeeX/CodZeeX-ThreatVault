@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1682
+id: 062d8c6fd212c7a8fd9322192df2cb94
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-04-30
+tags:
+    - attack.persistence
+    - attack.t1082
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1682.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1682'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
