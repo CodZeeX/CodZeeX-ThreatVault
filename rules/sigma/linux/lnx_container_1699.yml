@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 1699
+id: ee9b6cc1f6f19e6c641d011fbd436e3e
+status: stable
+description: Identifies suspicious Linux event matching LATERAL_MOVEMENT
+references:
+    - https://attack.mitre.org/tactics/lateral_movement
+author: RobsHs (CodZeeX)
+date: 2025-05-01
+tags:
+    - attack.lateral_movement
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1699.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
