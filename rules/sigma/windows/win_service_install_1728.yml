@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1728
+id: fc277fef45d891a403b4a4fee98cbc96
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-02
+tags:
+    - attack.initial_access
+    - attack.t1128
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1728.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1728'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
