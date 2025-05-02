@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1716
+id: 97d96416d3c625b541a6ab90b8fa0ffa
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-02
+tags:
+    - attack.initial_access
+    - attack.t1116
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1716.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1716'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
