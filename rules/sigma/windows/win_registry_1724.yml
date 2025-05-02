@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1724
+id: d51436176c126ccf4a1e3fc855d7d3d3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-02
+tags:
+    - attack.collection
+    - attack.t1124
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1724.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1724'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
