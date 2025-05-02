@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1718
+id: 30e144ece57a8cb85d1710da66e130f1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-02
+tags:
+    - attack.persistence
+    - attack.t1118
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1718.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1718'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
