@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1726
+id: 52d6be32642afc5c9bfab01d236bbe0d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-02
+tags:
+    - attack.exfiltration
+    - attack.t1126
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1726.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1726'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
