@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1738
+id: 7a1acdf0400e28c4859685ef28fcac80
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-04
+tags:
+    - attack.exfiltration
+    - attack.t1138
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1738.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1738'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
