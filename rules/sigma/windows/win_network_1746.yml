@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1746
+id: 0e2198bbd48df02daa6ab6f23dbaee0e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-04
+tags:
+    - attack.discovery
+    - attack.t1146
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1746.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1746'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
