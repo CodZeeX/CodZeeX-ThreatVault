@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1740
+id: 8d15e9cefeefb5084efd1939e0c0e355
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-04
+tags:
+    - attack.initial_access
+    - attack.t1140
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1740.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1740'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
