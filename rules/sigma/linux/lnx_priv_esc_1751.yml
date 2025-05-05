@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 1751
+id: 3b9e90eb700c70ab04d88406e9be88b4
+status: stable
+description: Identifies suspicious Linux event matching IMPACT
+references:
+    - https://attack.mitre.org/tactics/impact
+author: RobsHs (CodZeeX)
+date: 2025-05-05
+tags:
+    - attack.impact
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1751.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
