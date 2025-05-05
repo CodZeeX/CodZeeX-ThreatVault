@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1770
+id: 1a40258121ec5cda84197f84e87873ea
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-05
+tags:
+    - attack.discovery
+    - attack.t1170
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1770.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1770'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
