@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1752
+id: 179fc9b5f9543de1e00583631e99735e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-05
+tags:
+    - attack.initial_access
+    - attack.t1152
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1752.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1752'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
