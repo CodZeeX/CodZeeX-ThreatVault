@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1760
+id: 841ff3e9537eec24417ece8e95e339dd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-05
+tags:
+    - attack.collection
+    - attack.t1160
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1760.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1760'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
