@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1768
+id: 8cf78f76f02f954a6a5a33921e0d2c9b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-05
+tags:
+    - attack.defense_evasion
+    - attack.t1168
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1768.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1768'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
