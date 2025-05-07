@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1796
+id: 28841a4a0d829bf291a72cf5f21a8c28
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-07
+tags:
+    - attack.collection
+    - attack.t1196
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1796.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1796'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
