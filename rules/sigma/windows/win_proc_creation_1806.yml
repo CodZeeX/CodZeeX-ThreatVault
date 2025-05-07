@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1806
+id: 9584a051d2446fbcf226f7a2c9ba8e62
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-07
+tags:
+    - attack.discovery
+    - attack.t1206
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1806.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1806'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
