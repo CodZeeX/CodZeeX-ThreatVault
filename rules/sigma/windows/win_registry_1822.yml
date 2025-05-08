@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1822
+id: 77e679951026a34d9b8c06f6eea86685
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-08
+tags:
+    - attack.exfiltration
+    - attack.t1222
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1822.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1822'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
