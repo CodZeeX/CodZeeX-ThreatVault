@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1820
+id: f752d00a6eced80d45d2ac71429ac33a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-08
+tags:
+    - attack.collection
+    - attack.t1220
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1820.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1820'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
