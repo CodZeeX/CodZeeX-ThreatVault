@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 1811
+id: 7d9f9f96201c9083eeb6122a50c50c7c
+status: stable
+description: Identifies suspicious Linux event matching IMPACT
+references:
+    - https://attack.mitre.org/tactics/impact
+author: RobsHs (CodZeeX)
+date: 2025-05-08
+tags:
+    - attack.impact
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1811.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
