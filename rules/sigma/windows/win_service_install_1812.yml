@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1812
+id: f64f3055e39b509f54bbe9841f79364d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-08
+tags:
+    - attack.initial_access
+    - attack.t1212
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1812.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1812'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
