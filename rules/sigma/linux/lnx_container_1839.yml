@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 1839
+id: d7067eb7797eb7460c8549d860c2a6d2
+status: stable
+description: Identifies suspicious Linux event matching PRIVILEGE_ESCALATION
+references:
+    - https://attack.mitre.org/tactics/privilege_escalation
+author: RobsHs (CodZeeX)
+date: 2025-05-09
+tags:
+    - attack.privilege_escalation
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1839.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
