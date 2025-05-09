@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1830
+id: 1bf55f952d39830436158b2ee2e81783
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-09
+tags:
+    - attack.discovery
+    - attack.t1230
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1830.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1830'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
