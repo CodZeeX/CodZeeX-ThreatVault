@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1838
+id: 21925c7a4e88a9972ea3c8f560af2812
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-09
+tags:
+    - attack.persistence
+    - attack.t1238
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1838.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1838'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
