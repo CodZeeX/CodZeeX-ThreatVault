@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1842
+id: 6e8ed536f7d59f651254f9548fcb8edb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-10
+tags:
+    - attack.discovery
+    - attack.t1242
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1842.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1842'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
