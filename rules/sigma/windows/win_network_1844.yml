@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1844
+id: 0753747e8ff4111950c6a87f33ee1cad
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-10
+tags:
+    - attack.collection
+    - attack.t1244
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1844.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1844'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
