@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux File Modification - Pattern 1853
+id: ea5748921002c3f1b60dd2dfb8001f59
+status: stable
+description: Identifies suspicious Linux event matching CREDENTIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/credential_access
+author: RobsHs (CodZeeX)
+date: 2025-05-10
+tags:
+    - attack.credential_access
+logsource:
+    category: file_modification
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1853.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
