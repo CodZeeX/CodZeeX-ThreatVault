@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1852
+id: 043130a5baa7a6906f11d4bd48432fd1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-10
+tags:
+    - attack.defense_evasion
+    - attack.t1252
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1852.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1852'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
