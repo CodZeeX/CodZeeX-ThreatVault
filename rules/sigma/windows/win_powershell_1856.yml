@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1856
+id: 1cbea0b7d94a968ce63e1d2f2db19f5f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-10
+tags:
+    - attack.collection
+    - attack.t1256
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1856.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1856'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
