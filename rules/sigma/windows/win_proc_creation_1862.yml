@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1862
+id: 34aeeebb370c63df22bffb40d32bc0a7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-11
+tags:
+    - attack.persistence
+    - attack.t1262
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1862.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1862'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
