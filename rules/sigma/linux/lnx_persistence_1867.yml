@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Persistence Cron - Pattern 1867
+id: ce713635d2be6a5e47706faa1b17f984
+status: stable
+description: Identifies suspicious Linux event matching LATERAL_MOVEMENT
+references:
+    - https://attack.mitre.org/tactics/lateral_movement
+author: RobsHs (CodZeeX)
+date: 2025-05-11
+tags:
+    - attack.lateral_movement
+logsource:
+    category: persistence_cron
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1867.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
