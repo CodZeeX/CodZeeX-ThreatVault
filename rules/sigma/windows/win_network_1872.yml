@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1872
+id: fb07dd93ebf7a624a3f20d6955643d85
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-12
+tags:
+    - attack.initial_access
+    - attack.t1272
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1872.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1872'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
