@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1876
+id: e7b39c6bb5117897087d60fd7a325dbe
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-12
+tags:
+    - attack.defense_evasion
+    - attack.t1276
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1876.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1876'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
