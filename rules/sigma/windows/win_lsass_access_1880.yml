@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1880
+id: 3b64a2a585475c182065de112ef4e851
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-13
+tags:
+    - attack.collection
+    - attack.t1280
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1880.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1880'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
