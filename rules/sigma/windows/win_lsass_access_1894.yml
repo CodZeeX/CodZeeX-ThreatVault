@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1894
+id: e1e26adf50114fd0fe8762e84e36a6aa
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-13
+tags:
+    - attack.exfiltration
+    - attack.t1294
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1894.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1894'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
