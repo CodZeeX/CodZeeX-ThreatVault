@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1896
+id: 8eaac088f7b17e26b183c0a4fed54a59
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-13
+tags:
+    - attack.initial_access
+    - attack.t1296
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1896.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1896'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
