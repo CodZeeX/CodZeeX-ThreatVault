@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1890
+id: 36e04c7d71118797e43efe4e9885dd57
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-13
+tags:
+    - attack.discovery
+    - attack.t1290
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1890.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1890'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
