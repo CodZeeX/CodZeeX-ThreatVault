@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1908
+id: 5d4dd528ebef82dd457625562a150a10
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-14
+tags:
+    - attack.initial_access
+    - attack.t1308
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1908.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1908'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
