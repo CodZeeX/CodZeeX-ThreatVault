@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1904
+id: 4e52f273bd925f503c3c31fe5c00ba8c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-14
+tags:
+    - attack.collection
+    - attack.t1304
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1904.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1904'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
