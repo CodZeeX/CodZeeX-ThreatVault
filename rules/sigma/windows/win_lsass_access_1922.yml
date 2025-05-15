@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1922
+id: 8970e4b2305e9529f626319ce6729935
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-15
+tags:
+    - attack.persistence
+    - attack.t1322
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1922.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1922'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
