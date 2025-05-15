@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 1930
+id: 47568369d7cfcef5e860e7e3475c6fde
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-15
+tags:
+    - attack.exfiltration
+    - attack.t1330
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_1930.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1930'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
