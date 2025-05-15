@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1928
+id: fa70f0fa936b51e1e65d944788adaf2e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-15
+tags:
+    - attack.collection
+    - attack.t1328
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1928.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1928'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
