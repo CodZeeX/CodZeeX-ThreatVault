@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1926
+id: 72dbf0fe350792b6145e2ae4e9bd00eb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-15
+tags:
+    - attack.discovery
+    - attack.t1326
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1926.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1926'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
