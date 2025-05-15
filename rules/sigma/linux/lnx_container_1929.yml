@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 1929
+id: 8c778ffbb68352a179d6a7862b06bef5
+status: stable
+description: Identifies suspicious Linux event matching COMMAND_AND_CONTROL
+references:
+    - https://attack.mitre.org/tactics/command_and_control
+author: RobsHs (CodZeeX)
+date: 2025-05-15
+tags:
+    - attack.command_and_control
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1929.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
