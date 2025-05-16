@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1946
+id: 4439ea4d2ec942f5cc9574fd6824db66
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-16
+tags:
+    - attack.persistence
+    - attack.t1346
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1946.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1946'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
