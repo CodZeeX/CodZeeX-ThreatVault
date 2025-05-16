@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1942
+id: 69b12c28c66129507eeaafc92d490905
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-16
+tags:
+    - attack.exfiltration
+    - attack.t1342
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1942.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1942'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
