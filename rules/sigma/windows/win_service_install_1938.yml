@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1938
+id: 137bb6909442dccef169e11c60c1e14d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-16
+tags:
+    - attack.discovery
+    - attack.t1338
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1938.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1938'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
