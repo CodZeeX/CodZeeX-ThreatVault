@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 1960
+id: 7b307684fcfe812169d467883f631d35
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-17
+tags:
+    - attack.defense_evasion
+    - attack.t1360
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_1960.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1960'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
