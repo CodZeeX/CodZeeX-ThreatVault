@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1956
+id: 8f7bce3a2ff0790833284a41c98565f3
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-17
+tags:
+    - attack.initial_access
+    - attack.t1356
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1956.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1956'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
