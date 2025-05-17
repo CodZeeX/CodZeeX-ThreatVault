@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1966
+id: b65d42308bfc1d61df7c9bdbaff8f240
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-17
+tags:
+    - attack.exfiltration
+    - attack.t1366
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1966.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1966'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
