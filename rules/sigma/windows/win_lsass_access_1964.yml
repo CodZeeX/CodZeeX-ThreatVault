@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 1964
+id: ad649a14fb7f46853d7fb84928c9868a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-17
+tags:
+    - attack.collection
+    - attack.t1364
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_1964.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1964'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
