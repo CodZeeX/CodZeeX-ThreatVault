@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1962
+id: e86aa00d241a1b866756425e33e33c81
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-17
+tags:
+    - attack.discovery
+    - attack.t1362
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1962.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1962'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
