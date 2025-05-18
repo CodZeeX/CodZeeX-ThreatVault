@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1970
+id: 00a95b154a5cb1874cbc9506caceca44
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-18
+tags:
+    - attack.persistence
+    - attack.t1370
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1970.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1970'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
