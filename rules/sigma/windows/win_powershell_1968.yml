@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 1968
+id: bd93efded2f5a2e58cee2aba2e20feeb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-18
+tags:
+    - attack.initial_access
+    - attack.t1368
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_1968.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1968'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
