@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 1971
+id: b5b57e2996eaf78f9f3a677239fc15e3
+status: stable
+description: Identifies suspicious Linux event matching PRIVILEGE_ESCALATION
+references:
+    - https://attack.mitre.org/tactics/privilege_escalation
+author: RobsHs (CodZeeX)
+date: 2025-05-18
+tags:
+    - attack.privilege_escalation
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1971.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
