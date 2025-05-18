@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 1969
+id: f95ac9e96c05aa2a22815f629171e3fa
+status: stable
+description: Identifies suspicious Linux event matching EXECUTION
+references:
+    - https://attack.mitre.org/tactics/execution
+author: RobsHs (CodZeeX)
+date: 2025-05-18
+tags:
+    - attack.execution
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_1969.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
