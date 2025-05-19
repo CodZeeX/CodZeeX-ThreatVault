@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1976
+id: b3e74ac04f7a7824552cc62ffe8d2bae
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-19
+tags:
+    - attack.collection
+    - attack.t1376
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1976.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1976'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
