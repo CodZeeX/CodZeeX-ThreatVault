@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Scheduled Task Creation - Variant 1986
+id: e6fbcfa7a433b7761e936c6b87bcd563
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-19
+tags:
+    - attack.discovery
+    - attack.t1386
+logsource:
+    category: scheduled_task_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'scheduled_task_sample_1986.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1986'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
