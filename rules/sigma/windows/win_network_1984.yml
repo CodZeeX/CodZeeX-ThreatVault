@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1984
+id: f2a06b768c3a820e4d401f92c03d5198
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-19
+tags:
+    - attack.defense_evasion
+    - attack.t1384
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1984.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1984'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
