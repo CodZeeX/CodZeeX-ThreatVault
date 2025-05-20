@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 1998
+id: 836279b37094695bc73d8112eeee0727
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-20
+tags:
+    - attack.discovery
+    - attack.t1398
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_1998.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1998'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
