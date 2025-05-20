@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 1994
+id: 96e6180a3ce64e87dc744edd4673ff73
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-20
+tags:
+    - attack.persistence
+    - attack.t1394
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_1994.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1994'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
