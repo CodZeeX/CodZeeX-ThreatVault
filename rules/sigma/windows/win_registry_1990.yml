@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 1990
+id: 1c8c7eaeaca9ee1e89610e54bf3a6bed
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-20
+tags:
+    - attack.exfiltration
+    - attack.t1390
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_1990.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_1990'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
