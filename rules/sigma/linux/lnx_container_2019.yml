@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 2019
+id: 3da8b42f2fca0b42040eae83810fda78
+status: stable
+description: Identifies suspicious Linux event matching PRIVILEGE_ESCALATION
+references:
+    - https://attack.mitre.org/tactics/privilege_escalation
+author: RobsHs (CodZeeX)
+date: 2025-05-21
+tags:
+    - attack.privilege_escalation
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2019.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
