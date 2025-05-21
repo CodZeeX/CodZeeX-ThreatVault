@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2024
+id: 5a5d8abcfa480c1d0ae6c9697e7babd8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-21
+tags:
+    - attack.collection
+    - attack.t1424
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2024.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2024'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
