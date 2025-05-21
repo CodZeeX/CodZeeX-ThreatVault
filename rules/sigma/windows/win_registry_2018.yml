@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2018
+id: 84655ff74f0a2e16e3b665ed15218edd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-21
+tags:
+    - attack.persistence
+    - attack.t1418
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2018.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2018'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
