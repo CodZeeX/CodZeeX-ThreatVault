@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2022
+id: 550dd0a60cb858d4460c367d97c60739
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-21
+tags:
+    - attack.discovery
+    - attack.t1422
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2022.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2022'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
