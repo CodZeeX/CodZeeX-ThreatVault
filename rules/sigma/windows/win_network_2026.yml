@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2026
+id: 2af809bf809d730e70a21a6d113afebc
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-21
+tags:
+    - attack.exfiltration
+    - attack.t1426
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2026.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2026'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
