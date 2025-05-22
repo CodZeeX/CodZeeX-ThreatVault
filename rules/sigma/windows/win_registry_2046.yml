@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2046
+id: 47e7ea3689d7ebd790dd49f4040bb92f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-22
+tags:
+    - attack.discovery
+    - attack.t1446
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2046.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2046'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
