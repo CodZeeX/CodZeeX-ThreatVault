@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2050
+id: ed49484d072d683284b1343f286433a7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-22
+tags:
+    - attack.exfiltration
+    - attack.t1450
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2050.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2050'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
