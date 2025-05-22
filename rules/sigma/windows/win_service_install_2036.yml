@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2036
+id: 4a6519fedb0b8fedc15b2c1483b372a1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-22
+tags:
+    - attack.collection
+    - attack.t1436
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2036.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2036'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
