@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2034
+id: fb546bbe1e0e11f63cf1a35c181800d6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-22
+tags:
+    - attack.discovery
+    - attack.t1434
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2034.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2034'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
