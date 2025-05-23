@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2062
+id: 34c680a4317790d63199e6ab3ac0d159
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-23
+tags:
+    - attack.exfiltration
+    - attack.t1462
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2062.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2062'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
