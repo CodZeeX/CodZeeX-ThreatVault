@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2054
+id: efb666192e0f9d42e35dc9da9111d2a6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-23
+tags:
+    - attack.persistence
+    - attack.t1454
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2054.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2054'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
