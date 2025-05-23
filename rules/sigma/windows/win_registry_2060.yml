@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2060
+id: aaa84ed3c3ee830c7e951a3265b04002
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-23
+tags:
+    - attack.collection
+    - attack.t1460
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2060.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2060'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
