@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Privilege Escalation - Pattern 2071
+id: f031f0266ebb7013aafe97607eab126e
+status: stable
+description: Identifies suspicious Linux event matching LATERAL_MOVEMENT
+references:
+    - https://attack.mitre.org/tactics/lateral_movement
+author: RobsHs (CodZeeX)
+date: 2025-05-24
+tags:
+    - attack.lateral_movement
+logsource:
+    category: privilege_escalation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2071.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
