@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2082
+id: 3671c57a7d771063b25d41a06e9385ed
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-24
+tags:
+    - attack.discovery
+    - attack.t1482
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2082.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2082'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
