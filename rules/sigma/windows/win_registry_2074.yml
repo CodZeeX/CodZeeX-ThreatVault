@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2074
+id: e0d9b2c3dae17fa492280649495e585e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-24
+tags:
+    - attack.exfiltration
+    - attack.t1474
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2074.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2074'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
