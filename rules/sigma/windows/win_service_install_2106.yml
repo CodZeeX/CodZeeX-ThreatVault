@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2106
+id: 6b97e9a24bfd85110d702ff2b65ff5b4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-26
+tags:
+    - attack.discovery
+    - attack.t1506
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2106.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2106'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
