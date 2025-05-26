@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2114
+id: 546e3738cb121a06fdb4f700fdffcb33
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-26
+tags:
+    - attack.persistence
+    - attack.t1514
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2114.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2114'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
