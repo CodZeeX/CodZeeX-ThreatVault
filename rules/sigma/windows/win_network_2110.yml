@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2110
+id: 7086c2409a190bd8c7a1f454f26be3ae
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-26
+tags:
+    - attack.exfiltration
+    - attack.t1510
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2110.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2110'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
