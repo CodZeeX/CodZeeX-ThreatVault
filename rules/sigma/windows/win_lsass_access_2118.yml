@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2118
+id: 71b38c0069fbcd23f1c56b0cbc3497f9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-27
+tags:
+    - attack.discovery
+    - attack.t1518
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2118.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2118'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
