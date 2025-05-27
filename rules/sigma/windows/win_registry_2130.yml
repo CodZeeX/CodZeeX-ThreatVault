@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2130
+id: 8e4f255c1019a792ffb323ae011b0752
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-27
+tags:
+    - attack.discovery
+    - attack.t1530
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2130.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2130'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
