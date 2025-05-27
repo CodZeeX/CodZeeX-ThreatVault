@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2124
+id: d000d914f34cdb71e099966a0a0bc88e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-27
+tags:
+    - attack.initial_access
+    - attack.t1524
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2124.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2124'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
