@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2144
+id: 1ab927837421b2b94d580478374e773a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-28
+tags:
+    - attack.collection
+    - attack.t1544
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2144.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2144'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
