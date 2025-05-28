@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2150
+id: 8cb14eeb678dfe837cf9952f2d1f30e4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-28
+tags:
+    - attack.persistence
+    - attack.t1550
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2150.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2150'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
