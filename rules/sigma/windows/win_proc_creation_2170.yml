@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2170
+id: e260e43d7842b2e864433c57c5116e93
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-29
+tags:
+    - attack.exfiltration
+    - attack.t1570
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2170.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2170'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
