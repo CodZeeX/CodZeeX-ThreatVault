@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2162
+id: f2c8d27ce1213d24fdd8acec5ae513a5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-29
+tags:
+    - attack.persistence
+    - attack.t1562
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2162.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2162'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
