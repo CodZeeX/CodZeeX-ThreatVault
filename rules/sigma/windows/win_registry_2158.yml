@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2158
+id: 39ebc46e8c43eb334933c8961303a5de
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-29
+tags:
+    - attack.exfiltration
+    - attack.t1558
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2158.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2158'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
