@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2166
+id: ce9313b4079b63aa74479f0d617c05b0
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-29
+tags:
+    - attack.discovery
+    - attack.t1566
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2166.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2166'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
