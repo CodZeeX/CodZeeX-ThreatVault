@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2172
+id: 8112b865c844f12bf6daca6069c63f7d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-29
+tags:
+    - attack.initial_access
+    - attack.t1572
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2172.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2172'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
