@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2190
+id: e8745f246fdc9f54902ac711ff0454a1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-30
+tags:
+    - attack.discovery
+    - attack.t1590
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2190.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2190'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
