@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2178
+id: a1312ae795a0fc72070dbe334fec2b39
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-05-30
+tags:
+    - attack.discovery
+    - attack.t1578
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2178.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2178'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
