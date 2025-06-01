@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2214
+id: dc55ab0a2278b930ea7d3039265c0af9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-01
+tags:
+    - attack.discovery
+    - attack.t1614
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2214.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2214'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
