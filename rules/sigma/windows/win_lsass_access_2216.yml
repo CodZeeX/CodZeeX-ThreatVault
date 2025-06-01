@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2216
+id: a031cb3b09f2e2c1b4d99e212556487e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-01
+tags:
+    - attack.collection
+    - attack.t1616
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2216.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2216'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
