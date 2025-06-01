@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2204
+id: a708d893efe579b79936e4f08fc54ecb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-01
+tags:
+    - attack.collection
+    - attack.t1604
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2204.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2204'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
