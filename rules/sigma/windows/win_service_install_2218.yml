@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2218
+id: 66fa6016463c43f20b2c8442c30e0fb8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-01
+tags:
+    - attack.exfiltration
+    - attack.t1618
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2218.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2218'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
