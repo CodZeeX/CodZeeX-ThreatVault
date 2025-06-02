@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2228
+id: 0f3f9aafce95224427699eda9fe97659
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-02
+tags:
+    - attack.collection
+    - attack.t1628
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2228.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2228'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
