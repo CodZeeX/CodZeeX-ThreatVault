@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2220
+id: e278606904418a2f02b8c9a9c26430fc
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-02
+tags:
+    - attack.initial_access
+    - attack.t1620
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2220.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2220'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
