@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2236
+id: a8f5b5c9bcf819c396d7c3545dc7b2ef
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-02
+tags:
+    - attack.defense_evasion
+    - attack.t1636
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2236.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2236'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
