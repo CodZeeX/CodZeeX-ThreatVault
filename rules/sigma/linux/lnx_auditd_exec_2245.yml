@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Process Creation - Pattern 2245
+id: 6f8ad471b9e01f5775d29c7a909e4d1f
+status: stable
+description: Identifies suspicious Linux event matching EXECUTION
+references:
+    - https://attack.mitre.org/tactics/execution
+author: RobsHs (CodZeeX)
+date: 2025-06-03
+tags:
+    - attack.execution
+logsource:
+    category: process_creation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2245.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
