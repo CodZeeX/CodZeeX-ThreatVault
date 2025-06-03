@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2244
+id: f3b0f9131839a5e6bee4181bf744ad54
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-03
+tags:
+    - attack.initial_access
+    - attack.t1644
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2244.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2244'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
