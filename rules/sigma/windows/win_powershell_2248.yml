@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2248
+id: 362c0f69d5a8cf9018c1d423bbe242ce
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-03
+tags:
+    - attack.defense_evasion
+    - attack.t1648
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2248.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2248'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
