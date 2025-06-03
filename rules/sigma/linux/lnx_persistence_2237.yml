@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Persistence Cron - Pattern 2237
+id: a260f487e8922315c6da16dd0496674b
+status: stable
+description: Identifies suspicious Linux event matching CREDENTIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/credential_access
+author: RobsHs (CodZeeX)
+date: 2025-06-03
+tags:
+    - attack.credential_access
+logsource:
+    category: persistence_cron
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2237.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
