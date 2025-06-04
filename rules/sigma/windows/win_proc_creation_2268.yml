@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2268
+id: e9328a9e2593a3dbd77b2ae934ac0590
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-04
+tags:
+    - attack.initial_access
+    - attack.t1668
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2268.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2268'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
