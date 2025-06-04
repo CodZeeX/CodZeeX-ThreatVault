@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2270
+id: 6539c794492b1498cb8e46a1b1803b8e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-04
+tags:
+    - attack.persistence
+    - attack.t1670
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2270.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2270'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
