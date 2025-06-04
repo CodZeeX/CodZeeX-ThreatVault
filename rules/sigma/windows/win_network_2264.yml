@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2264
+id: 0e342d5aeae4fa7d010ef89352c0ef2d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-04
+tags:
+    - attack.collection
+    - attack.t1664
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2264.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2264'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
