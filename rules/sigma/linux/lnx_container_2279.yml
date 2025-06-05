@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 2279
+id: 1605ad44bc60b67296619d1a7cb73700
+status: stable
+description: Identifies suspicious Linux event matching IMPACT
+references:
+    - https://attack.mitre.org/tactics/impact
+author: RobsHs (CodZeeX)
+date: 2025-06-05
+tags:
+    - attack.impact
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2279.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
