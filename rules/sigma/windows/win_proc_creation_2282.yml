@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2282
+id: 3c34d1f68b118f27444db2ca582c8542
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-05
+tags:
+    - attack.persistence
+    - attack.t1682
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2282.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2282'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
