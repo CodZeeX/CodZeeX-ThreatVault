@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2278
+id: 0bfc0ef6701d45a02d7a24bf07715dcf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-05
+tags:
+    - attack.exfiltration
+    - attack.t1678
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2278.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2278'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
