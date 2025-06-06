@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2292
+id: ad4a0e94ff16bd7404227c64ab29ad13
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-06
+tags:
+    - attack.initial_access
+    - attack.t1692
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2292.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2292'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
