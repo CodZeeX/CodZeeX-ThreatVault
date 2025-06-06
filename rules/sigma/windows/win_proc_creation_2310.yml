@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2310
+id: e0d2bb7e19e3597f433be76de6cd2c6d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-06
+tags:
+    - attack.discovery
+    - attack.t1710
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2310.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2310'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
