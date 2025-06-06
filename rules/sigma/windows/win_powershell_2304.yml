@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2304
+id: 6beb7f7408c28a655d1b0d02e7f9ac8e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-06
+tags:
+    - attack.initial_access
+    - attack.t1704
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2304.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2304'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
