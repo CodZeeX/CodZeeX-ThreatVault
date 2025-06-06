@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2302
+id: ac72bfa7231e2bb65c760da41eba1865
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-06
+tags:
+    - attack.exfiltration
+    - attack.t1702
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2302.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2302'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
