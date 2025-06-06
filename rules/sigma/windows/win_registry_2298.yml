@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2298
+id: 3a2e7501916bde3b9452ed909461b724
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-06
+tags:
+    - attack.discovery
+    - attack.t1698
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2298.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2298'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
