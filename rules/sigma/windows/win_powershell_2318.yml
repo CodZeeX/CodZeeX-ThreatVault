@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2318
+id: 74aa010db4e86f17059ce55b24c552cb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-07
+tags:
+    - attack.persistence
+    - attack.t1718
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2318.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2318'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
