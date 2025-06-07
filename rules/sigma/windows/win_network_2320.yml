@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2320
+id: 4f0a49673070d47741e8224bf37e6103
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-07
+tags:
+    - attack.defense_evasion
+    - attack.t1720
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2320.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2320'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
