@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2324
+id: a7a8dce0e058a5ad853669aa56386ab1
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-07
+tags:
+    - attack.collection
+    - attack.t1724
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2324.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2324'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
