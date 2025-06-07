@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2314
+id: 7102e4a370999fa6f47b230e9be9f89a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-07
+tags:
+    - attack.exfiltration
+    - attack.t1714
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2314.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2314'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
