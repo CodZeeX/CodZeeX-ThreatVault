@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2316
+id: b07b11d3cceee862e0bfc06dec743179
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-07
+tags:
+    - attack.initial_access
+    - attack.t1716
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2316.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2316'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
