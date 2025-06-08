@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2326
+id: 81d6cfda2cce5b5f5214485e00519237
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-08
+tags:
+    - attack.exfiltration
+    - attack.t1726
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2326.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2326'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
