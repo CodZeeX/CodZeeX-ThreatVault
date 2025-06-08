@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2330
+id: c730c0766ba1f2cfc5fce79c6f3e1a16
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-08
+tags:
+    - attack.persistence
+    - attack.t1730
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2330.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2330'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
