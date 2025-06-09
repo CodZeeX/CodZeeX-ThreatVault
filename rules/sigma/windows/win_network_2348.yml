@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2348
+id: 38ca85b1225cdbc5c4aae2001cdd6835
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-09
+tags:
+    - attack.collection
+    - attack.t1748
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2348.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2348'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
