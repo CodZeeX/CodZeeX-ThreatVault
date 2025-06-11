@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2380
+id: edfd5bd58d38b408aa618367c1246a9f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-11
+tags:
+    - attack.defense_evasion
+    - attack.t1780
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2380.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2380'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
