@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2370
+id: c809a5e1f14ff5da1acda96e51bcb5f8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-11
+tags:
+    - attack.discovery
+    - attack.t1770
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2370.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2370'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
