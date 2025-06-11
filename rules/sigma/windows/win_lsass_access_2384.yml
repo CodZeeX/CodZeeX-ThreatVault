@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2384
+id: d9e6b058b54e1bb3a93a322f8458f5ca
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-11
+tags:
+    - attack.collection
+    - attack.t1784
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2384.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2384'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
