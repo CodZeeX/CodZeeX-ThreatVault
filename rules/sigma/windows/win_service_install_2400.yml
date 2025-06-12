@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2400
+id: cd9cb7fea9c053bf13572ce38879dcfb
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-12
+tags:
+    - attack.initial_access
+    - attack.t1000
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2400.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2400'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
