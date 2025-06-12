@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2390
+id: 94746d17ea1c8041d63c99a271e2c860
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-12
+tags:
+    - attack.persistence
+    - attack.t1790
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2390.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2390'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
