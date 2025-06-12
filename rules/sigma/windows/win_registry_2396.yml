@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2396
+id: 3e03b5dec71729423eb5aa988d1faf41
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-12
+tags:
+    - attack.collection
+    - attack.t1796
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2396.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2396'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
