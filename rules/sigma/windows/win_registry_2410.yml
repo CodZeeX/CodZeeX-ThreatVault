@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2410
+id: 0ecb6b0c74600a8d79c9b52a673df8a7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-13
+tags:
+    - attack.exfiltration
+    - attack.t1010
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2410.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2410'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
