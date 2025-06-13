@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2408
+id: 8900ac7437556b19b39a2862a36cb8d9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-13
+tags:
+    - attack.collection
+    - attack.t1008
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2408.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2408'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
