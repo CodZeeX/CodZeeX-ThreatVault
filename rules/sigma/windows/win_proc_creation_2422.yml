@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2422
+id: 00b5c4f7bf3ffba1013ce4a8bca2d953
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-13
+tags:
+    - attack.exfiltration
+    - attack.t1022
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2422.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2422'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
