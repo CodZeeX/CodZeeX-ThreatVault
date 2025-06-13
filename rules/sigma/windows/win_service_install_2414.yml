@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2414
+id: 9990819b9cf41b9a02aef7055b976a32
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-13
+tags:
+    - attack.persistence
+    - attack.t1014
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2414.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2414'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
