@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2430
+id: 7a4a109fd68ed4ac9e0e764c9a46976a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-14
+tags:
+    - attack.discovery
+    - attack.t1030
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2430.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2430'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
