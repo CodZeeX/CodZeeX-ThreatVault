@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2424
+id: ac288beb5d1c4f38da61cc02a613ba7e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-14
+tags:
+    - attack.initial_access
+    - attack.t1024
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2424.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2424'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
