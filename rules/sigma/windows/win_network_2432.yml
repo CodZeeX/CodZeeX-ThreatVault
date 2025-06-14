@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2432
+id: b679d9b0389aebcb7588c651f2ebf31c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-14
+tags:
+    - attack.collection
+    - attack.t1032
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2432.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2432'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
