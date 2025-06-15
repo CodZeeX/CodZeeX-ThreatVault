@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2440
+id: 97eef12d7258f79b0ab2481b2547075a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-15
+tags:
+    - attack.defense_evasion
+    - attack.t1040
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2440.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2440'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
