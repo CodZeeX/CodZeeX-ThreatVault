@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2442
+id: 86011369d9812a9d8c792ef0524c75a5
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-15
+tags:
+    - attack.discovery
+    - attack.t1042
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2442.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2442'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
