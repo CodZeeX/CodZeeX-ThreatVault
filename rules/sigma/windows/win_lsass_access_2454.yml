@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2454
+id: 664c7fcfd9f9f9cafd12cd7fe1a3f08a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-16
+tags:
+    - attack.discovery
+    - attack.t1054
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2454.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2454'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
