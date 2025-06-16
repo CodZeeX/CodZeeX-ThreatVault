@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2460
+id: f26b7d954422b27e5c2c4bc20d4d3ad9
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-16
+tags:
+    - attack.initial_access
+    - attack.t1060
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2460.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2460'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
