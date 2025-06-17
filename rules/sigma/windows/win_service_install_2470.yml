@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2470
+id: e0749bc9301827726f617cdd649e7725
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-17
+tags:
+    - attack.exfiltration
+    - attack.t1070
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2470.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2470'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
