@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2464
+id: 97f4036814aaffd275d073d2b9aed1fa
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-17
+tags:
+    - attack.defense_evasion
+    - attack.t1064
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2464.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2464'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
