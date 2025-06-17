@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2468
+id: b33d683ee445b514111f9e72f79d0f1c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-17
+tags:
+    - attack.collection
+    - attack.t1068
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2468.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2468'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
