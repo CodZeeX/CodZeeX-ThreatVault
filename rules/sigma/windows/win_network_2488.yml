@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2488
+id: 6c4c4d4de91c6a2103473230e35718a4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-18
+tags:
+    - attack.defense_evasion
+    - attack.t1088
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2488.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2488'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
