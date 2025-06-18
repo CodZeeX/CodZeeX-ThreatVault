@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2492
+id: 48face07f97914c5d92bad21b4a3479d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-18
+tags:
+    - attack.collection
+    - attack.t1092
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2492.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2492'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
