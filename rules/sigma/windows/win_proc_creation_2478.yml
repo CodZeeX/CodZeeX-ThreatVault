@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2478
+id: c08d555155a33378ddf422d40b5fb084
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-18
+tags:
+    - attack.discovery
+    - attack.t1078
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2478.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2478'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
