@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2484
+id: eeaf374ff9d377d8534dbdc713e3ee62
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-18
+tags:
+    - attack.initial_access
+    - attack.t1084
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2484.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2484'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
