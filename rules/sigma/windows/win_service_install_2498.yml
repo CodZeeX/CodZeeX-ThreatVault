@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2498
+id: dcf3f333c0c68749d4d5335826ebe992
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-19
+tags:
+    - attack.persistence
+    - attack.t1098
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2498.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2498'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
