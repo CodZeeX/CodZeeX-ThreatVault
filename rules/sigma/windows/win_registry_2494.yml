@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2494
+id: f128c36e178048671a643716ec1f85a6
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-19
+tags:
+    - attack.exfiltration
+    - attack.t1094
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2494.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2494'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
