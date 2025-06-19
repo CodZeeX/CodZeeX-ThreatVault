@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2502
+id: 613600a1ce097b2cee7fa8b28b18005a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-19
+tags:
+    - attack.discovery
+    - attack.t1102
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2502.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2502'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
