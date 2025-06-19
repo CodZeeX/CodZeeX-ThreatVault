@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2496
+id: 795f9394a1ba3dc1176211682d8142c8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-19
+tags:
+    - attack.initial_access
+    - attack.t1096
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2496.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2496'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
