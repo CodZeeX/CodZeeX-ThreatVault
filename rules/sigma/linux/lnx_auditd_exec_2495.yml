@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Process Creation - Pattern 2495
+id: b17313f794a7f04e1e002c8cea76068c
+status: stable
+description: Identifies suspicious Linux event matching IMPACT
+references:
+    - https://attack.mitre.org/tactics/impact
+author: RobsHs (CodZeeX)
+date: 2025-06-19
+tags:
+    - attack.impact
+logsource:
+    category: process_creation
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2495.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
