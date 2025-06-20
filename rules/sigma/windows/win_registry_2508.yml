@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2508
+id: f6e7de55c6c36d6b99540655077b28e4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-20
+tags:
+    - attack.initial_access
+    - attack.t1108
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2508.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2508'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
