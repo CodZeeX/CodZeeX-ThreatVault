@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2524
+id: 117ff9311df8ef45bb36b07f974e4dcd
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-20
+tags:
+    - attack.defense_evasion
+    - attack.t1124
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2524.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2524'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
