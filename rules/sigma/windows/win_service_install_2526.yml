@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2526
+id: 4b3136991c63f3dacdda9a4771f8f75a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-20
+tags:
+    - attack.discovery
+    - attack.t1126
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2526.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2526'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
