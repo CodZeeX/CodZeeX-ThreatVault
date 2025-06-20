@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2520
+id: 236320747f69e105bfd6b7302624341e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-20
+tags:
+    - attack.initial_access
+    - attack.t1120
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2520.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2520'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
