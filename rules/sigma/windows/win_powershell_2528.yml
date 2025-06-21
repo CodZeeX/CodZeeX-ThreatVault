@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2528
+id: b161460c19f8e4f629b74fb803cad2c7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-21
+tags:
+    - attack.collection
+    - attack.t1128
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2528.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2528'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
