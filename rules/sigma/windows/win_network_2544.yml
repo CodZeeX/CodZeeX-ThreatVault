@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2544
+id: f23d900eeb98e8d5ee7037ea5690a1cf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-22
+tags:
+    - attack.initial_access
+    - attack.t1144
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2544.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2544'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
