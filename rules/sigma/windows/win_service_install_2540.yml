@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2540
+id: 43ed7fe12b65c45c6ef028852e2bc72a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-22
+tags:
+    - attack.collection
+    - attack.t1140
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2540.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2540'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
