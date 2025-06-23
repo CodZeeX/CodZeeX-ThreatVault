@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2562
+id: e023b80296e7ed0e806e7c25fea3068c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-23
+tags:
+    - attack.discovery
+    - attack.t1162
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2562.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2562'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
