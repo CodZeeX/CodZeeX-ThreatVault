@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2556
+id: b36fcca3eab892803bb1d6ea8e763fe2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-23
+tags:
+    - attack.initial_access
+    - attack.t1156
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2556.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2556'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
