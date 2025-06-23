@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2554
+id: 4771dabaed107a8eb3f20a32b813f00b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-23
+tags:
+    - attack.exfiltration
+    - attack.t1154
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2554.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2554'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
