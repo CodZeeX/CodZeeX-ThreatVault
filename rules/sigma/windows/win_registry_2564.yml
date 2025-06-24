@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2564
+id: 3bc9a91ddf5686aec6db109e7844a850
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-24
+tags:
+    - attack.collection
+    - attack.t1164
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2564.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2564'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
