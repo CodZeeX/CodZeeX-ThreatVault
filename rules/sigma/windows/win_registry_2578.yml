@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2578
+id: 15043c4b40be6a7b15a13bcd54e76a0a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-24
+tags:
+    - attack.exfiltration
+    - attack.t1178
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2578.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2578'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
