@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2582
+id: 83fe80623e6caec5443eccd1276f7bdc
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-24
+tags:
+    - attack.persistence
+    - attack.t1182
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2582.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2582'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
