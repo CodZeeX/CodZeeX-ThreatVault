@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2568
+id: cc6c962111f6fc92f1ba48c9411937dc
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-24
+tags:
+    - attack.initial_access
+    - attack.t1168
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2568.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2568'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
