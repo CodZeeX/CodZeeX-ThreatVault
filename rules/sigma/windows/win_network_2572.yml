@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2572
+id: 98910bd05c50fca7463febc3acd4ad4d
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-24
+tags:
+    - attack.defense_evasion
+    - attack.t1172
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2572.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2572'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
