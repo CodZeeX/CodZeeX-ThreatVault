@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2596
+id: c82ee1ab8c09962c34ee7de4a9c058a8
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-25
+tags:
+    - attack.defense_evasion
+    - attack.t1196
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2596.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2596'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
