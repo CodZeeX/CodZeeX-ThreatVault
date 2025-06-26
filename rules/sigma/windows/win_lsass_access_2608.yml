@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2608
+id: 78883873ad7bb816f424214e94c202fe
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-26
+tags:
+    - attack.defense_evasion
+    - attack.t1208
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2608.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2608'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
