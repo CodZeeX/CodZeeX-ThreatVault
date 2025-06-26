@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2612
+id: 16e36f5948a10dd95222f1daf263bfc4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-26
+tags:
+    - attack.collection
+    - attack.t1212
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2612.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2612'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
