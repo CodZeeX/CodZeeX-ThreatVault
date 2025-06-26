@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2610
+id: b7e4b11a053feae229fe5fc97462d559
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-26
+tags:
+    - attack.discovery
+    - attack.t1210
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2610.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2610'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
