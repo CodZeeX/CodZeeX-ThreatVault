@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2618
+id: 7af506fcf9386262b759270c2113c166
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-27
+tags:
+    - attack.persistence
+    - attack.t1218
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2618.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2618'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
