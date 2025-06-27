@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2620
+id: 80795cd0bfd4782a8b44d6a40fce507f
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-27
+tags:
+    - attack.defense_evasion
+    - attack.t1220
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2620.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2620'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
