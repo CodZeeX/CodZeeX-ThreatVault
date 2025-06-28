@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2642
+id: ae15b0e2fe00ab5a5bf87b76393d0616
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-28
+tags:
+    - attack.persistence
+    - attack.t1242
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2642.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2642'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
