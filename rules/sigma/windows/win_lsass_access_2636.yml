@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2636
+id: 373e78d087f22ba1e860638e29d0f68c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-28
+tags:
+    - attack.collection
+    - attack.t1236
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2636.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2636'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
