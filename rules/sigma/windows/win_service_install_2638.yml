@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2638
+id: f947918304c4af1c5266c5803bc62da4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-28
+tags:
+    - attack.exfiltration
+    - attack.t1238
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2638.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2638'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
