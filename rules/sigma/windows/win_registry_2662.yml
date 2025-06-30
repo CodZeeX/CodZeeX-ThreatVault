@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2662
+id: 5326d56aa6ed030aa8548ace576d377a
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-30
+tags:
+    - attack.exfiltration
+    - attack.t1262
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2662.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2662'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
