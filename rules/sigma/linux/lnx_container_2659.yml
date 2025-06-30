@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux Container Escape - Pattern 2659
+id: 35faa48b3618da540daf6c70ef6d8a4b
+status: stable
+description: Identifies suspicious Linux event matching LATERAL_MOVEMENT
+references:
+    - https://attack.mitre.org/tactics/lateral_movement
+author: RobsHs (CodZeeX)
+date: 2025-06-30
+tags:
+    - attack.lateral_movement
+logsource:
+    category: container_escape
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2659.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
