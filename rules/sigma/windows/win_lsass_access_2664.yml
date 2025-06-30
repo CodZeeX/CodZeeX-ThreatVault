@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2664
+id: 50d122f7b8eefc6d9847a137197eed67
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-30
+tags:
+    - attack.initial_access
+    - attack.t1264
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2664.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2664'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
