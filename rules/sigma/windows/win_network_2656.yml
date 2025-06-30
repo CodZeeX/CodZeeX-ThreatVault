@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2656
+id: 0da5b953d4d57be0766755f3bf87e182
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-06-30
+tags:
+    - attack.defense_evasion
+    - attack.t1256
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2656.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2656'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
