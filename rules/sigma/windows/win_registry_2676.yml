@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2676
+id: faf68522ed144ecea77afcb6b3d4bc9e
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-01
+tags:
+    - attack.initial_access
+    - attack.t1276
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2676.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2676'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
