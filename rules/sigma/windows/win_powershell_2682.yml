@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2682
+id: 947aefdfe0297da297e2066b2e719153
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-01
+tags:
+    - attack.discovery
+    - attack.t1282
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2682.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2682'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
