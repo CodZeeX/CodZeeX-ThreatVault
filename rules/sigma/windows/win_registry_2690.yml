@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2690
+id: bf81641dfea320e1d6175f5174bcd272
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-01
+tags:
+    - attack.persistence
+    - attack.t1290
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2690.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2690'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
