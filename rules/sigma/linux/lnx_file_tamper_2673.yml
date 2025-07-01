@@ -1,0 +1,23 @@
+title: Detect Suspicious Linux File Modification - Pattern 2673
+id: b1debbe85e3a15366c85b6d039ec24bd
+status: stable
+description: Identifies suspicious Linux event matching COMMAND_AND_CONTROL
+references:
+    - https://attack.mitre.org/tactics/command_and_control
+author: RobsHs (CodZeeX)
+date: 2025-07-01
+tags:
+    - attack.command_and_control
+logsource:
+    category: file_modification
+    product: linux
+detection:
+    selection:
+        CommandLine|contains:
+            - 'sudo -S'
+            - 'insmod suspicious_2673.ko'
+            - '/bin/nc -e /bin/sh'
+    condition: selection
+falsepositives:
+    - Scheduled system backup scripts
+level: medium
