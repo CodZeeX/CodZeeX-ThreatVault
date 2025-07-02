@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2706
+id: 764fe2cde6807556814a6edd9fe3fd62
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-02
+tags:
+    - attack.discovery
+    - attack.t1306
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2706.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2706'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
