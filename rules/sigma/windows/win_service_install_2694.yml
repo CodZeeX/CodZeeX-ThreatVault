@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2694
+id: 639d21b58fbcf718c86440a6201e62e2
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-02
+tags:
+    - attack.discovery
+    - attack.t1294
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2694.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2694'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
