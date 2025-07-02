@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2710
+id: b029d0f63613b24c043e9cb946731060
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-02
+tags:
+    - attack.exfiltration
+    - attack.t1310
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2710.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2710'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
