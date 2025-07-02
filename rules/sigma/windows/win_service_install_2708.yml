@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2708
+id: 412835a2c37afabc595ae9922356ae75
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-02
+tags:
+    - attack.collection
+    - attack.t1308
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2708.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2708'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
