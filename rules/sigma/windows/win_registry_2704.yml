@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2704
+id: 38c909b736d87486cbda361e4c242d16
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-02
+tags:
+    - attack.defense_evasion
+    - attack.t1304
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2704.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2704'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
