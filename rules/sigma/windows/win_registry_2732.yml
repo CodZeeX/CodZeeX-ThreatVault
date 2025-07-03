@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2732
+id: 0ca71441c7203bc30be78e4ed7271887
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-03
+tags:
+    - attack.collection
+    - attack.t1332
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2732.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2732'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
