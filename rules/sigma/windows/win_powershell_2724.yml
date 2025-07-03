@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2724
+id: b103ec21c86692401b453a66cd766caf
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-03
+tags:
+    - attack.initial_access
+    - attack.t1324
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2724.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2724'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
