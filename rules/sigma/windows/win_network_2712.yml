@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Network Connection - Variant 2712
+id: 2ea54fdf2be600f6c9c3cd9d53710dd7
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-03
+tags:
+    - attack.initial_access
+    - attack.t1312
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'network_sample_2712.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2712'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
