@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2718
+id: 3641d43a4d3e8775eafa6eae2f4a0240
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-03
+tags:
+    - attack.discovery
+    - attack.t1318
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2718.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2718'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
