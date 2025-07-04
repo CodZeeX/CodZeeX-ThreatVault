@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2738
+id: 2ee31bd168eb225d7a2bf6234a202bb4
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-04
+tags:
+    - attack.persistence
+    - attack.t1338
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2738.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2738'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
