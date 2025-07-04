@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2736
+id: 1d3e908d066a919ae7a73faa86450a7c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-04
+tags:
+    - attack.initial_access
+    - attack.t1336
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2736.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2736'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
