@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2750
+id: 67475aa51f348a00a4343a5bbd2fd735
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-04
+tags:
+    - attack.persistence
+    - attack.t1350
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2750.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2750'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
