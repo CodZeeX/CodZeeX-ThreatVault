@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Access - Variant 2762
+id: 3ed2fc70300599276d294e3d075b061b
+status: stable
+description: Identifies anomalous and adversarial activity matching technique PERSISTENCE
+references:
+    - https://attack.mitre.org/tactics/persistence
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-05
+tags:
+    - attack.persistence
+    - attack.t1362
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'lsass_access_sample_2762.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2762'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
