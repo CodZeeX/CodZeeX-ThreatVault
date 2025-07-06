@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Process Creation - Variant 2772
+id: 57c038311bdfe030af1883fb1a8bfb88
+status: stable
+description: Identifies anomalous and adversarial activity matching technique INITIAL_ACCESS
+references:
+    - https://attack.mitre.org/tactics/initial_access
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-06
+tags:
+    - attack.initial_access
+    - attack.t1372
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'proc_creation_sample_2772.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2772'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
