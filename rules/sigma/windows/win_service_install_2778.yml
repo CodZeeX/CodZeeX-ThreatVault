@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2778
+id: 2c778eb7f8b294dd729ec151eec39a09
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DISCOVERY
+references:
+    - https://attack.mitre.org/tactics/discovery
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-07
+tags:
+    - attack.discovery
+    - attack.t1378
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2778.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2778'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
