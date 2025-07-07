@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Registry Event - Variant 2788
+id: 54eea55f5e20931413b06fecfb274dad
+status: stable
+description: Identifies anomalous and adversarial activity matching technique DEFENSE_EVASION
+references:
+    - https://attack.mitre.org/tactics/defense_evasion
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-07
+tags:
+    - attack.defense_evasion
+    - attack.t1388
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'registry_sample_2788.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2788'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
