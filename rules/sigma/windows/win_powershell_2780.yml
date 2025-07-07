@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2780
+id: 463a905884576e767baf64ab3b6eb353
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-07
+tags:
+    - attack.collection
+    - attack.t1380
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2780.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2780'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
