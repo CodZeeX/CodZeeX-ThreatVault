@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Service Installation - Variant 2792
+id: b3221ca80b531155fdb761041a39b37c
+status: stable
+description: Identifies anomalous and adversarial activity matching technique COLLECTION
+references:
+    - https://attack.mitre.org/tactics/collection
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-07
+tags:
+    - attack.collection
+    - attack.t1392
+logsource:
+    category: service_installation
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'service_install_sample_2792.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2792'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
