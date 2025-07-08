@@ -1,0 +1,27 @@
+title: Detect Suspicious Windows Ps Script - Variant 2794
+id: 4ac9ffacc682ff1d4a53cdb9e3e89952
+status: stable
+description: Identifies anomalous and adversarial activity matching technique EXFILTRATION
+references:
+    - https://attack.mitre.org/tactics/exfiltration
+    - https://github.com/CodZeeX
+author: RobsHs (CodZeeX)
+date: 2025-07-08
+tags:
+    - attack.exfiltration
+    - attack.t1394
+logsource:
+    category: ps_script
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - 'powershell_sample_2794.exe'
+            - 'powershell.exe'
+        CommandLine|contains:
+            - '-ExecutionPolicy Bypass'
+            - 'token_stealer_2794'
+    condition: selection
+falsepositives:
+    - Authorized administrative maintenance scripts
+level: high
