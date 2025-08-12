@@ -1,0 +1,22 @@
+/*
+    YARA Rule: CodZeeX_Ransomware_Detection_0564
+    Category: ransomware
+    Author: RobsHs (CodZeeX)
+    Date: 2025-08-12
+    Reference: https://github.com/organizations/CodZeeX
+*/
+
+rule CodZeeX_Ransomware_Detection_0564 {
+    meta:
+        description = "Detects behavioral and byte patterns for ransomware family variant #564"
+        author = "RobsHs (CodZeeX)"
+        severity = "HIGH"
+        version = "1.0"
+        date = "2025-08-12"
+    strings:
+        $s1 = "CodZeeX_ThreatSignature_00564" ascii wide
+        $s2 = "cmd.exe /c echo beacon_0564" ascii
+        $hex1 = { 48 89 5C 24 08 57 48 83 EC 20 48 8B 34 }
+    condition:
+        (uint16(0) == 0x5A4D or uint32(0) == 0x464C457F) and ($s1 or ($s2 and $hex1))
+}
