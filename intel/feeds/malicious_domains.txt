@@ -6,4 +6,4 @@ auth-session-recovery[.]org
 billing-verification-portal[.]top
 api-cloud-sync-worker[.]info
 payload-distribution-cdn[.]biz
-threat-delivery-0001.cdn-update-info\n
+threat-delivery-0001.cdn-update-info\nthreat-delivery-0004.cdn-update-info\n
