@@ -7,4 +7,4 @@
 91.215.85.17,Lumma C2 Gate,CRITICAL
 103.151.125.10,Brute Force Scanner,LOW
 185.196.8.22,Phishing Staging Host,HIGH
-103.12.4.147,C2_Beacon_Relay_0,HIGH\n91.128.45.52,C2_Beacon_Relay_3,HIGH\n185.33.114.212,C2_Beacon_Relay_6,HIGH\n198.47.220.58,C2_Beacon_Relay_9,HIGH\n
+103.12.4.147,C2_Beacon_Relay_0,HIGH\n91.128.45.52,C2_Beacon_Relay_3,HIGH\n185.33.114.212,C2_Beacon_Relay_6,HIGH\n198.47.220.58,C2_Beacon_Relay_9,HIGH\n91.232.227.51,C2_Beacon_Relay_12,HIGH\n
