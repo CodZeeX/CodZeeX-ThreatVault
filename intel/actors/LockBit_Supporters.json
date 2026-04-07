@@ -9,5 +9,7 @@
   "threat_level": "HIGH",
   "mitre_attck_groups": [
     "G023"
-  ]
+  ],
+  "last_observed_activity": "2026-04-07",
+  "observed_campaign_count": 1
 }
